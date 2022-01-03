@@ -1,0 +1,7 @@
+%{
+#include"mnlsp.tab.h"
+%}
+
+%%
+
+%%
