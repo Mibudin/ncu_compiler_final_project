@@ -22,8 +22,8 @@ TARGET	:= mnlsp
 
 # Set the compiling settings
 # 	(Flex would generate C99 codes in default)
-CC		:= gcc
-C_FLAGS	:= -O2 -w -fmax-errors=3 -std=c99
+CC		:= g++
+C_FLAGS	:= -O2 -w -fmax-errors=3 -std=c++14
 ifeq ($(TARGET_ENV), OJ)
 C_FLAGS += -DONLINE_JUDGE
 endif
@@ -75,27 +75,31 @@ cleanbin:
 cleanobj:
 	$(RM) $(OBJ_DIR)/$(TARGET).tab.o $(OBJ_DIR)/$(TARGET).yy.o
 
-# Clean all the C source files
+# Clean all the generated C header files
+cleaninc:
+	$(RM) $(INC_DIR)/$(TARGET).tab.h
+
+# Clean all the generated C source files
 cleancxx:
-	$(RM) $(SRC_DIR)/$(TARGET).tab.c $(SRC_DIR)/$(TARGET).yy.c
+	$(RM) $(CXX_DIR)/$(TARGET).tab.cpp $(CXX_DIR)/$(TARGET).yy.cpp
 
 # Clean all the generated files
-clean: cleanbin cleanobj cleancxx
+clean: cleanbin cleanobj cleaninc cleancxx
 
 # Compile all the specified files (if needed), and excute them
 run: all
 	$(BIN_DIR)/$(EXECUTABLE)
 
 # Compile the Yacc file
-$(CXX_DIR)/$(TARGET).tab.c: $(SRC_DIR)/$(TARGET).y
-	$(YACC) $(Y_FLAGS) -o $@ $<
+$(CXX_DIR)/$(TARGET).tab.cpp: $(SRC_DIR)/$(TARGET).y
+	$(YACC) $(Y_FLAGS) -o $@ $< --defines=$(INC_DIR)/$(TARGET).tab.h
 
 # Compile the Lex file
-$(CXX_DIR)/$(TARGET).yy.c: $(SRC_DIR)/$(TARGET).l
+$(CXX_DIR)/$(TARGET).yy.cpp: $(SRC_DIR)/$(TARGET).l $(INC_DIR)/$(TARGET).tab.h $(INC_DIR)/$(TARGET).hpp
 	$(LEX) $(L_FLAGS) -o $@ $<
 
 # Compile the boject files
-$(OBJ_DIR)/%.o: $(CXX_DIR)/%.c
+$(OBJ_DIR)/%.o: $(CXX_DIR)/%.cpp
 	$(CC) $(C_FLAGS) -I$(INC_DIR) -L$(LIB_DIR) $(LIBS) -c $< -o $@
 
 # Compile the specified file
