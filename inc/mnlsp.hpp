@@ -6,16 +6,51 @@
 #include<string>
 #include<vector>
 #include<map>
+#include<memory>
+#include<stdexcept>
 
 // TODO: `_define` need the 2nd top RTE
 // TODO: `_if`, `_define` not eval first
+// TODO: define strings
 
 
 namespace mnlsp
 {
+    #define ERRMSG_REDEFINE(_vid) (mnlsp::strf( \
+        "[REDEFINE] Error: " \
+        "The variable `%s` has deen defined.", \
+        _vid.c_str()))
+    #define ERRMSG_VAR_NOT_FOUND(_vid) (mnlsp::strf( \
+        "[VAR_NOT_FOUND] Error: " \
+        "The variable `%s` cannot be found in the current RTE.", \
+        _vid.c_str()))
+    #define ERRMSG_VAR_NOT_FOUND_G(_vid) (mnlsp::strf( \
+        "[VAR_NOT_FOUND_G] Error: " \
+        "The variable `%s` cannot be found in all RTEs.", \
+        _vid.c_str()))
+    #define ERRMSG_NO_MORE_RTE (mnlsp::strf( \
+        "[NO_MORE_RTE] Error: " \
+        "There is no more RTE to be interacted with."))
+    #define ERRMSG_TYPE_ERR(_expc, _real) (mnlsp::strf( \
+        "[TYPE_ERR] Error: " \
+        "Expect `%s`, but get `%s`.", \
+        mnlsp::dtype_str(_expc).c_str(), mnlsp::dtype_str(_real).c_str()))
+
+
     enum class ErrType : int
     {
-        NOERR = 0, REDEFINE, VAR_NOT_FOUND, VOID_PRG
+        NOERR = 0,
+        REDEFINE,
+        VAR_NOT_FOUND,
+        VAR_NOT_FOUND_G,
+        NO_MORE_RTE,
+        TYPE_ERR, 
+    };
+
+    struct ErrPkt
+    {
+        ErrType etype;
+        std::string msg;  // TODO: Print default msg if empty
     };
 
     enum class NodeType : int
@@ -28,10 +63,20 @@ namespace mnlsp
         UNKNOWN = 0, NUMBER, BOOLEAN, FUNCTION
     };
 
+
     struct RTE;  // Forward declaration
 
     struct Data
     {
+        Data() :
+            dtype{DataType::UNKNOWN}  {}
+        Data(int ival) :
+            dtype{DataType::NUMBER}   {this->d.ival = ival;}
+        Data(bool bval) :
+            dtype{DataType::BOOLEAN}  {this->d.bval = bval;}
+        Data(RTE* fval) :
+            dtype{DataType::FUNCTION} {this->d.fval = fval;}
+
         DataType dtype;
         union
         {
@@ -65,8 +110,10 @@ namespace mnlsp
     struct RTEOtions
     {
         // bool pre_eval = true;
-        bool param_num_uncertain = false;
+        // bool param_num_uncertain = false;
+        int _;  // TODO
     };
+
 
     class RTES;  // Forward declaration
 
@@ -74,52 +121,58 @@ namespace mnlsp
     {
     public:
         static RTE* get_base_rte();
-        static Data eval_data(RTES* rtes, Data data);
-        static Data eval_var(RTES* rtes, const std::string id);
-        static Data eval_node(RTES* rtes, ExpNode* node);
+
         RTE(RTEOtions rteo);
-        ErrType init();
-        ErrType new_var(const std::string id, const Data data);
-        ErrType new_var(const std::string id);
-        ErrType new_var(const std::string id, int ival);
-        ErrType has_var(const std::string id);
-        ErrType get_var(const std::string id, Data* data);
-        ErrType set_var(const std::string id, const Data data);
-        ErrType set_var(const std::string id, int ival);
+
+        void new_var(const std::string id, const Data data);
+        bool has_var(const std::string id);
+        Data get_var(const std::string id);
+        void set_var(const std::string id, const Data data);
+
+        void set_fun(ExpNode* fun);
+
         void add_param(const std::string id);
         void add_params(std::vector<std::string> params);
-        ErrType get_all_params(std::vector<Data>* datas);
-        RTE* new_bif(const std::string id, RTEOtions rteo, ErrType (*bif)(RTES* rtes));
+        std::vector<Data> get_all_params();
+
         Data eval(RTES* rtes);
         void param_eval(RTES* rtes, signed int pn);
         void params_eval(RTES* rtes);
+
     private:
+        static Data eval_data(RTES* rtes, Data data);
+        static Data eval_var(RTES* rtes, const std::string id);
+        static Data eval_node(RTES* rtes, ExpNode* node);
+
         RTEOtions rteo;
-        // Variable pool
-        // Handle scope and closure (keep env)
-        VarPool vpool;  // Data types are unkown until being called
+        VarPool vpool;
         std::vector<std::string> ppool;
-        ExpNode* fun;
         std::vector<ExpNode*> params;
-        ErrType (*bif)(RTES* rtes);
+        ExpNode* fun;
+        Data (*bif)(RTES* rtes);
+
+        void init();
+        RTE* new_bif(const std::string id, RTEOtions rteo, Data (*bif)(RTES* rtes));
     };
 
     class RTES
     {
     public:
         RTES();
-        ErrType new_var(const std::string id, const Data data);
-        ErrType new_var(const std::string id, int ival);
-        ErrType has_var(const std::string id);
-        ErrType get_var(const std::string id, Data* data);
-        ErrType set_var(const std::string id, const Data data);
-        ErrType set_var(const std::string id, int ival);
-        ErrType enter_env(RTE* rte);
-        ErrType leave_env();
-        ErrType get_rte(unsigned int from_back, RTE* rte);
+
+        void new_var(const std::string id, const Data data);
+        bool has_var(const std::string id);
+        Data get_var(const std::string id);
+        void set_var(const std::string id, const Data data);
+
+        void enter_env(RTE* rte);
+        void leave_env();
+        RTE* get_rte(unsigned int from_back);
+
     private:
         std::vector<RTE*> rtev;
-        ErrType init();
+
+        void init();
     };
 
     /**
@@ -130,6 +183,7 @@ namespace mnlsp
 
     /**
      * Builtin Function Implementing:
+     * - _
      * 
      * - print-num
      * - print-bool
@@ -169,12 +223,28 @@ namespace mnlsp
      * - Dynamic scope?
      */
 
-    ErrType _add(RTES* rtes);
-    ErrType _define(RTES* rtes);
+    // From: https://stackoverflow.com/a/26221725
+    template<typename ... Args>
+    std::string strf(const std::string& format, Args ... args);
+    std::string dtype_str(DataType dtype);
 
+    RTES* mnlsp_init();
+
+
+    namespace bif
+    {
+        Data _          (RTES* rtes);
+
+        Data _print_num (RTES* rtes);
+        Data _print_bool(RTES* rtes);
+
+        Data _plus      (RTES* rtes);
+
+        Data _define    (RTES* rtes);
+    }
 
     // TODO: Program Run Time Environment
-    extern RTE prte;
+    // extern RTE prte;
 }
 
 #define YYSTYPE mnlsp::ExpNode

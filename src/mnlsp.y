@@ -25,7 +25,7 @@ extern "C"
 }
 
 %type program
-%type stmts
+%type stmts  // _
 %type stmt
 %type exps
 %type exp

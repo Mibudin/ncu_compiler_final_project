@@ -3,6 +3,41 @@
 
 namespace mnlsp
 {
+    // ---BEGIN--- From: https://stackoverflow.com/a/26221725
+    template<typename ... Args>
+    std::string strf(const std::string& format, Args ... args)
+    {
+        int size_s = std::snprintf(nullptr, 0, format.c_str(), args ...) + 1; // Extra space for '\0'
+        if( size_s <= 0 ){throw std::runtime_error("Error during formatting.");}
+        auto size = static_cast<size_t>(size_s);
+        auto buf = std::make_unique<char[]>(size);
+        std::snprintf(buf.get(), size, format.c_str(), args ...);
+        return std::string(buf.get(), buf.get() + size - 1); // We don't want the '\0' inside
+    }
+    // ---END--- From: https://stackoverflow.com/a/26221725
+
+    std::string dtype_str(DataType dtype)
+    {
+        switch(dtype)
+        {
+            case DataType::UNKNOWN:  return std::string("UNKNOWN");
+            case DataType::NUMBER:   return std::string("NUMBER");
+            case DataType::BOOLEAN:  return std::string("BOOLEAN");
+            case DataType::FUNCTION: return std::string("FUNCTION");
+        }
+    }
+
+    RTES* mnlsp_init()
+    {
+        // TODO: Other init?
+        RTE* rte = RTE::get_base_rte();
+        RTES* rtes = new RTES();
+        rtes->enter_env(rte);
+        // TODO: No new_bif in runtime
+
+        return rtes;
+    }
+
     RTE* RTE::get_base_rte()
     {
         // TODO: Inject builtin functions (only for root)
@@ -10,48 +45,14 @@ namespace mnlsp
 
         RTE* rte = new RTE(rteo);
         RTE* trte;
-        trte = rte->new_bif("_add", rteo, _add);
-        trte->add_param("_p-0");
-        trte->add_param("_p-0");
+        trte = rte->new_bif("_", rteo, bif::_);
+        trte = rte->new_bif("_plus", rteo, bif::_plus);
+
+        VarNode* n = new VarNode();
+        n->vid = "_";
+        rte->set_fun((ExpNode*)n);
 
         return rte;
-    }
-
-    Data RTE::eval_data(RTES* rtes, Data data)
-    {
-        switch(data.dtype)
-        {
-            case DataType::NUMBER:
-            case DataType::BOOLEAN:
-                return data;
-
-            case DataType::FUNCTION:
-            {
-                RTE* rte = new RTE(*data.d.fval);
-                rte->init();
-                return rte->eval(rtes);
-            }
-
-            case DataType::UNKNOWN:
-            default:
-                // TODO: Error handle
-                return data;
-        }
-    }
-
-    Data RTE::eval_var(RTES* rtes, const std::string id)
-    {
-        Data data;
-        rtes->get_var(id, &data);
-        
-        return eval_data(rtes, data);
-    }
-
-    Data RTE::eval_node(RTES* rtes, ExpNode* node)
-    {
-        if(node->ntype == NodeType::LIT)
-             return eval_data(rtes, ((LitNode*)node)->data);
-        else return eval_var(rtes, ((VarNode*)node)->vid);
     }
 
     RTE::RTE(RTEOtions rteo)
@@ -60,72 +61,42 @@ namespace mnlsp
         init();
     }
 
-    ErrType RTE::init()
+    void RTE::new_var(const std::string id, const Data data)
     {
-        bif = nullptr;
-        vpool.clear();
-
-        new_var("_v");
-        new_var("_p", 0);
-
-        return ErrType::NOERR;
-    }
-
-    ErrType RTE::new_var(const std::string id, const Data data)
-    {
-        if(vpool.count(id)) return ErrType::REDEFINE;
+        if(vpool.count(id))
+            throw (ErrPkt){ErrType::REDEFINE, ERRMSG_REDEFINE(id)};
         vpool[id] = new Data(data);
 
-        return ErrType::NOERR;
+        return;
     }
 
-    ErrType RTE::new_var(const std::string id, int ival)
+    bool RTE::has_var(const std::string id)
     {
-        Data data;
-        data.dtype = DataType::NUMBER;
-        data.d.ival = ival;
-
-        return new_var(id, data);
-    }
-
-    ErrType RTE::new_var(const std::string id)
-    {
-        Data data;
-        data.dtype = DataType::UNKNOWN;
-
-        return new_var(id, data);
-    }
-
-    ErrType RTE::has_var(const std::string id)
-    {
-        return vpool.find(id) == vpool.end() ? ErrType::VAR_NOT_FOUND : ErrType::NOERR;
+        return vpool.find(id) == vpool.end();
     }
     
-    ErrType RTE::get_var(const std::string id, Data* data)
+    Data RTE::get_var(const std::string id)
     {
         auto it = vpool.find(id);
-        if(it == vpool.end()) return ErrType::VAR_NOT_FOUND;
-        *data = *((*it).second);
+        if(it == vpool.end())
+            throw (ErrPkt){ErrType::VAR_NOT_FOUND, ERRMSG_VAR_NOT_FOUND(id)};
 
-        return ErrType::NOERR;
+        return *((*it).second);
     }
 
-    ErrType RTE::set_var(const std::string id, const Data data)
+    void RTE::set_var(const std::string id, const Data data)
     {
-        if(has_var(id) == ErrType::NOERR)
-        {
-            *(vpool[id]) = data;
-        }
-        else return ErrType::VAR_NOT_FOUND;
+        if(!has_var(id)) *(vpool[id]) = data;
+        else throw (ErrPkt){ErrType::VAR_NOT_FOUND, ERRMSG_VAR_NOT_FOUND(id)};
+
+        return;
     }
 
-    ErrType RTE::set_var(const std::string id, int ival)
+    void RTE::set_fun(ExpNode* fun)
     {
-        Data data;
-        data.dtype = DataType::NUMBER;
-        data.d.ival = ival;
+        this->fun = fun;
 
-        return set_var(id, data);
+        return;
     }
 
     void RTE::add_param(const std::string id)
@@ -133,10 +104,13 @@ namespace mnlsp
         // TODO: Inject params
         // TODO: Inject eval variable
         // TODO: Inject options
+        // TODO:
+        // Bind to parameters literal name and do the body
+        // Params cross RTE
 
         ppool.push_back(id);
-        new_var(id);
-        set_var("_p", ppool.size());
+        new_var(id, Data());
+        set_var("_p", Data((int)ppool.size()));
 
         return;
     }
@@ -146,54 +120,28 @@ namespace mnlsp
         for(std::string id : ids)
         {
             ppool.push_back(id);
-            new_var(id);
+            new_var(id, Data());
         }
-        new_var("_p", ppool.size());
+        new_var("_p", Data((int)ppool.size()));
 
         return;
     }
 
-    ErrType RTE::get_all_params(std::vector<Data>* datas)
+    std::vector<Data> RTE::get_all_params()
     {
-        Data data;
-        for(std::string id : ppool)
-        {
-            get_var(id, &data);
-            datas->push_back(data);
-        }
+        std::vector<Data> datas;
+        for(std::string id : ppool) datas.push_back(get_var(id));
 
-        return ErrType::NOERR;
-    }
-
-    RTE* RTE::new_bif(const std::string id, RTEOtions rteo, ErrType (*bif)(RTES* rtes))
-    {
-        RTE* rte = new RTE(rteo);
-        rte->bif = bif;
-        Data data;
-        data.dtype = DataType::FUNCTION;
-        data.d.fval = rte;
-
-        new_var(id, data);
-
-        return rte;
+        return datas;
     }
 
     Data RTE::eval(RTES* rtes)
     {
         rtes->enter_env(this);
-        if(bif != nullptr)
-        {
-            bif(rtes);
-        }
-        else
-        {
-            // TO[DONE]DO
-            // Bind to parameters literal name and do the body
-            // Params cross RTE
-            set_var("_v", eval_node(rtes, fun));
-        }
         Data data;
-        get_var("_v", &data);
+        if(bif != nullptr) data = bif(rtes);
+        else               data = eval_node(rtes, fun);
+        set_var("_v", data);
         rtes->leave_env();
 
         return data;
@@ -231,126 +179,153 @@ namespace mnlsp
         return;
     }
 
+    Data RTE::eval_data(RTES* rtes, Data data)
+    {
+        switch(data.dtype)
+        {
+            case DataType::NUMBER:
+            case DataType::BOOLEAN:
+                return data;
+
+            case DataType::FUNCTION:
+            {
+                RTE* rte = new RTE(*data.d.fval);
+                rte->init();
+                return rte->eval(rtes);
+            }
+
+            case DataType::UNKNOWN:
+            default:
+                // TODO: Error handle (when use it)
+                return data;
+        }
+    }
+
+    Data RTE::eval_var(RTES* rtes, const std::string id)
+    {
+        return eval_data(rtes, rtes->get_var(id));
+    }
+
+    Data RTE::eval_node(RTES* rtes, ExpNode* node)
+    {
+        if(node->ntype == NodeType::LIT)
+             return eval_data(rtes, ((LitNode*)node)->data);
+        else return eval_var(rtes, ((VarNode*)node)->vid);
+    }
+
+    void RTE::init()
+    {
+        bif = nullptr;
+        vpool.clear();
+
+        new_var("_v", Data());
+        new_var("_p", Data(0));
+
+        return;
+    }
+
+    RTE* RTE::new_bif(const std::string id, RTEOtions rteo, Data (*bif)(RTES* rtes))
+    {
+        RTE* rte = new RTE(rteo);
+        rte->bif = bif;
+        new_var(id, Data(rte));
+
+        return rte;
+    }
+
     RTES::RTES()
     {
         init();
     }
 
-    ErrType RTES::new_var(const std::string id, const Data data)
+    void RTES::new_var(const std::string id, const Data data)
     {
-        // Data data;
-        // if(node->ntype == NodeType::LIT)
-        // {
-        //     data = ((LitNode*)node)->data;
-        // }
-        // else
-        // {
-        //     if(get_var(id, &data) != ErrType::NOERR); // TODO: Error handle
-        // }
+        rtev.back()->new_var(id, data);
 
-        return rtev.back()->new_var(id, data);
+        return;
     }
 
-    ErrType RTES::new_var(const std::string id, int ival)
-    {
-        Data data;
-        data.dtype == DataType::NUMBER;
-        data.d.ival = ival;
-
-        return new_var(id, data);
-    }
-
-    ErrType RTES::has_var(const std::string id)
+    bool RTES::has_var(const std::string id)
     {
         for(auto it = rtev.rbegin(); it != rtev.rend(); it++)
-        {
-            if((*it)->has_var(id) == ErrType::NOERR)
-                return ErrType::NOERR;
-        }
+            if((*it)->has_var(id)) return true;
 
-        return ErrType::VAR_NOT_FOUND;
+        return false;
     }
 
-    ErrType RTES::get_var(const std::string id, Data* data)
+    Data RTES::get_var(const std::string id)
     {
         for(auto it = rtev.rbegin(); it != rtev.rend(); it++)
-        {
-            if((*it)->get_var(id, data) == ErrType::NOERR)
-                return ErrType::NOERR;
-        }
+            if((*it)->has_var(id)) return (*it)->get_var(id);
 
-        return ErrType::VAR_NOT_FOUND;
+        throw (ErrPkt){ErrType::VAR_NOT_FOUND_G, ERRMSG_VAR_NOT_FOUND_G(id)};
     }
 
-    ErrType RTES::set_var(const std::string id, const Data data)
+    void RTES::set_var(const std::string id, const Data data)
     {
         for(auto it = rtev.rbegin(); it != rtev.rend(); it++)
-        {
-            if((*it)->has_var(id) == ErrType::NOERR)
-                return (*it)->set_var(id, data);
-        }
+            if((*it)->has_var(id)){(*it)->set_var(id, data); return;}
 
-        return ErrType::VAR_NOT_FOUND;
+        throw (ErrPkt){ErrType::VAR_NOT_FOUND_G, ERRMSG_VAR_NOT_FOUND_G(id)};
     }
 
-    ErrType RTES::set_var(const std::string id, int ival)
-    {
-        Data data;
-        data.dtype == DataType::NUMBER;
-        data.d.ival = ival;
-
-        return set_var(id, data);
-    }
-
-    ErrType RTES::enter_env(RTE* rte)
+    void RTES::enter_env(RTE* rte)
     {
         rtev.push_back(rte);
 
-        return ErrType::NOERR;
+        return;
     }
 
-    ErrType RTES::leave_env()
+    void RTES::leave_env()
     {
-        if(rtev.size() <= 0) return ErrType::VOID_PRG;
+        if(rtev.size() == 0)
+            throw (ErrPkt){ErrType::VAR_NOT_FOUND_G, ERRMSG_NO_MORE_RTE};
         rtev.pop_back();
 
-        return ErrType::NOERR;
+        return;
     }
 
-    ErrType RTES::get_rte(unsigned int from_back, RTE* rte)
+    RTE* RTES::get_rte(unsigned int from_back)
     {
-        rte = rtev.end()[((-from_back + 1) % rtev.size()) - 1];
+        if(rtev.size() == 0)
+            throw (ErrPkt){ErrType::VAR_NOT_FOUND_G, ERRMSG_NO_MORE_RTE};
 
-        return ErrType::NOERR;
+        return rtev.end()[((-from_back + 1) % rtev.size()) - 1];
     }
 
-    ErrType RTES::init()
+    void RTES::init()
     {
         rtev.clear();
 
-        return ErrType::NOERR;
+        return;
     }
 
-    ErrType _add(RTES* rtes)
+    Data bif::_(RTES* rtes)
+    {
+        rtes->get_rte(1)->params_eval(rtes);
+
+        return Data();
+    }
+
+    Data bif::_plus(RTES* rtes)
     {
         // Params: _p-0, _p-1, ...
         // var("_v").set(var("_p-0").get() + get_var("_p-1").get())
 
-        RTE* crte;
-        rtes->get_rte(1, crte);
+        RTE* crte = rtes->get_rte(1);
         crte->params_eval(rtes);
 
-        std::vector<Data> datas;
-        crte->get_all_params(&datas);
+        std::vector<Data> datas = crte->get_all_params();
 
         int n = 0;
         for(Data d : datas)
         {
-            if(d.dtype != DataType::NUMBER);  // TODO; Type checking
+            if(d.dtype != DataType::NUMBER)
+                throw (ErrPkt){ErrType::TYPE_ERR,
+                    ERRMSG_TYPE_ERR(DataType::NUMBER, d.dtype)};
             n += d.d.ival;
         }
-        rtes->set_var("_v", n);
 
-        return ErrType::NOERR;
+        return Data(n);
     }
 }
