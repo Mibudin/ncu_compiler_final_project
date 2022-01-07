@@ -196,7 +196,8 @@ idsn
     |
     ;
 fun_body
-    : exp {}
+    : def_stmt exp {}
+    | exp {}
     ;
 fun_call
     : LP fun_exp paramsn RP {}

@@ -98,10 +98,14 @@ $(CXX_DIR)/$(TARGET).tab.cpp: $(SRC_DIR)/$(TARGET).y
 $(CXX_DIR)/$(TARGET).yy.cpp: $(SRC_DIR)/$(TARGET).l $(INC_DIR)/$(TARGET).tab.h $(INC_DIR)/$(TARGET).hpp
 	$(LEX) $(L_FLAGS) -o $@ $<
 
-# Compile the boject files
+# Compile the MNLSP file
+$(OBJ_DIR)/$(TARGET).o: $(SRC_DIR)/$(TARGET).cpp $(INC_DIR)/$(TARGET).hpp
+	$(CC) $(C_FLAGS) -I$(INC_DIR) -L$(LIB_DIR) $(LIBS) -c $< -o $@
+
+# Compile the object files
 $(OBJ_DIR)/%.o: $(CXX_DIR)/%.cpp
 	$(CC) $(C_FLAGS) -I$(INC_DIR) -L$(LIB_DIR) $(LIBS) -c $< -o $@
 
 # Compile the specified file
-$(BIN_DIR)/$(EXECUTABLE): $(OBJ_DIR)/$(TARGET).tab.o $(OBJ_DIR)/$(TARGET).yy.o
+$(BIN_DIR)/$(EXECUTABLE): $(OBJ_DIR)/$(TARGET).tab.o $(OBJ_DIR)/$(TARGET).yy.o $(OBJ_DIR)/$(TARGET).o
 	$(CC) $(C_FLAGS) -I$(INC_DIR) -L$(LIB_DIR) $(LIBS) $^ -o $@
