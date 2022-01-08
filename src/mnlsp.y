@@ -2,21 +2,19 @@
 
 %{
 #include<stdio.h>
-
-#include<iostream>
-#include<string>
-
 #include"mnlsp.hpp"
 
 #define DEBUG true
 
-#define ERR_SYN "syntax error"
+// #define ERR_SYN "syntax error"
 
 extern "C"
 {
     void yyerror(const char* msg);
     extern int yylex();
 };
+
+mnlsp::RTE* brte;
 %}
 
 %code requires
@@ -24,106 +22,117 @@ extern "C"
 #include"mnlsp.hpp"
 }
 
-%type program
-%type stmts  // _
-%type stmt
-%type exps
-%type exp
+%type<t> program
+%type<t> stmts
+%type<t> stmt
+%type<t> exps
+%type<t> exp
 
-%type print_stmt
+%type<t> print_stmt
 
-%type def_stmt
-%type variable
+%type<t> def_stmt
+%type<t> variable
 
-%type num_op
-%type plus
-%type minus
-%type multiply
-%type divide
-%type modulus
-%type greater
-%type smaller
-%type equal
+%type<t> num_op
+%type<t> plus
+%type<t> minus
+%type<t> multiply
+%type<t> divide
+%type<t> modulus
+%type<t> greater
+%type<t> smaller
+%type<t> equal
 
-%type logical_op
-%type and_op
-%type or_op
-%type not_op
+%type<t> logical_op
+%type<t> and_op
+%type<t> or_op
+%type<t> not_op
 
-%type fun_exp
-%type fun_ids
-%type idsn
-%type fun_body
-%type fun_call
-%type paramsn
-%type param
-%type last_exp
-%type fun_name
+%type<t> fun_exp
+%type<t> fun_ids
+%type<t> idsn
+%type<t> fun_body
+%type<t> fun_call
+%type<t> paramsn
+%type<t> param
+%type<t> last_exp
+%type<t> fun_name
 
-%type if_exp
-%type test_exp
-%type than_exp
-%type else_exp
+%type<t> if_exp
+%type<t> test_exp
+%type<t> than_exp
+%type<t> else_exp
 
-%token NUMBER
-%token ID
-%token BOOL_VAL
+%token<t> NUMBER
+%token<t> ID
+%token<t> BOOL_VAL
 
-%token LP
-%token RP
+%token<t> LP
+%token<t> RP
 
-%token PRINT_NUM_ID
-%token PRINT_BOOL_ID
+%token<t> PRINT_NUM_ID
+%token<t> PRINT_BOOL_ID
 
-%token PLUS_ID
-%token MINUS_ID
-%token MULTIPLY_ID
-%token DIVIDE_ID
-%token MODULUS_ID
-%token GREATER_ID
-%token SMALLER_ID
-%token EQUAL_ID
+%token<t> PLUS_ID
+%token<t> MINUS_ID
+%token<t> MULTIPLY_ID
+%token<t> DIVIDE_ID
+%token<t> MODULUS_ID
+%token<t> GREATER_ID
+%token<t> SMALLER_ID
+%token<t> EQUAL_ID
 
-%token AND_ID
-%token OR_ID
-%token NOT_ID
+%token<t> AND_ID
+%token<t> OR_ID
+%token<t> NOT_ID
 
-%token DEFINE_ID
+%token<t> DEFINE_ID
 
-%token FUN_ID
+%token<t> FUN_ID
 
-%token IF_ID
+%token<t> IF_ID
 
 %%
 program
-    : stmts {}
+    : stmts {
+        $$.r = mnlsp::RTE::get_base_rte();
+        $$.r->add_params(*$1.v);
+        brte = $$.r;
+    }
     ;
 stmts
-    : stmt stmts {}
-    | stmt {}
+    : stmt stmts {$$.v->push_back($1.n); $$.v->insert($$.v->end(), $2.v->begin(), $2.v->end());}
+    | stmt       {$$.v = new std::vector<mnlsp::ExpNode*>(); $$.v->push_back($1.n);}
     ;
 stmt
-    : exp {}
-    | def_stmt {}
-    | print_stmt {}
+    : exp        {$$.n = $1.n;}
+    | print_stmt {$$.n = new mnlsp::ExpNode(mnlsp::Data($1.r));}
+    | def_stmt   {}
     ;
 exps
-    : exp exps {}
-    | exp {}
+    : exp exps {$$.v->push_back($1.n); $$.v->insert($$.v->end(), $2.v->begin(), $2.v->end());}
+    | exp      {$$.v = new std::vector<mnlsp::ExpNode*>(); $$.v->push_back($1.n);}
     ;
 exp
-    : BOOL_VAL {}
-    | NUMBER {}
-    | variable {}
-    | num_op {}
+    : BOOL_VAL   {$$.n = new mnlsp::ExpNode(*$1.d);}
+    | NUMBER     {$$.n = new mnlsp::ExpNode(*$1.d);}
+    | variable   {}
+    | num_op     {$$.n = new mnlsp::ExpNode(mnlsp::Data($1.r));}
     | logical_op {}
-    | fun_exp {}
-    | fun_call {}
-    | if_exp {}
+    | fun_exp    {}
+    | fun_call   {}
+    | if_exp     {}
     ;
 
 print_stmt
-    : LP PRINT_NUM_ID exp RP {}
+    : LP PRINT_NUM_ID exp RP {
+        $$.v = new std::vector<mnlsp::ExpNode*>(); 
+        $$.v->push_back($3.n);
+
+        $$.r = new mnlsp::RTE();
+        $$.r->set_fun(new mnlsp::ExpNode("_print-num", 0));
+        $$.r->add_params(*$$.v);
+    }
     | LP PRINT_BOOL_ID exp RP {}
     ;
 
@@ -135,7 +144,7 @@ variable
     ;
 
 num_op
-    : plus {}
+    : plus {$$.r = $1.r;}
     | minus {}
     | multiply {}
     | divide {}
@@ -145,7 +154,15 @@ num_op
     | equal {}
     ;
 plus
-    : LP PLUS_ID exp exps RP {}
+    : LP PLUS_ID exp exps RP {
+        $$.v = new std::vector<mnlsp::ExpNode*>();
+        $$.v->push_back($3.n);
+        $$.v->insert($$.v->end(), $4.v->begin(), $4.v->end());
+
+        $$.r = new mnlsp::RTE();
+        $$.r->set_fun(new mnlsp::ExpNode("_plus", 0));
+        $$.r->add_params(*$$.v);
+    }
     ;
 minus
     : LP MINUS_ID exp exp RP {}
@@ -214,7 +231,7 @@ last_exp
     : exp {}
     ;
 fun_name
-    : ID {}
+    : ID {$$.n = new mnlsp::ExpNode(*$1.s, 0);}
     ;
 
 if_exp
@@ -235,6 +252,8 @@ void yyerror(const char* msg)
 {
     #if DEBUG
         fprintf(stderr, "%s\n", msg);
+    #else
+        fprintf(stderr, "%s\n", msg);
     #endif
     exit(0);
 
@@ -243,7 +262,18 @@ void yyerror(const char* msg)
 
 int main()
 {
-    /* yyparse(); */
+    mnlsp::RTES* prtes = mnlsp::mnlsp_init();
+
+    try
+    {
+        yyparse();
+        prtes->eval(brte);
+        /* printf(">>>\n"); */
+    }
+    catch(mnlsp::ErrPkt ep)
+    {
+        yyerror(ep.msg.c_str());
+    }
 
     return 0;
 }

@@ -1,4 +1,5 @@
 %{
+#include<stdlib.h>
 #include"mnlsp.tab.h"
 
 extern "C"
@@ -71,9 +72,12 @@ bool_val        "#t"|"#f"
 
 {if_id}         {return IF_ID;}
 
-{number}        {return NUMBER;}
-{id}            {return ID;}
-{bool_val}      {return BOOL_VAL;}
+{number}        {yylval.t.d = new mnlsp::Data((int)strtol(yytext, NULL, 10));
+                 return NUMBER;}
+{id}            {yylval.t.s = new std::string(yytext);
+                 return ID;}
+{bool_val}      {yylval.t.d = new mnlsp::Data(yytext[1] == 't');
+                 return BOOL_VAL;}
 
 .               {}
 

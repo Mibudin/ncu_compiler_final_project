@@ -481,14 +481,15 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "src/mnlsp.l"
 #line 2 "src/mnlsp.l"
+#include<stdlib.h>
 #include"mnlsp.tab.h"
 
 extern "C"
 {
     int yylex();
 };
-#line 491 "build/mnlsp.yy.cpp"
 #line 492 "build/mnlsp.yy.cpp"
+#line 493 "build/mnlsp.yy.cpp"
 
 #define INITIAL 0
 
@@ -705,9 +706,9 @@ YY_DECL
 		}
 
 	{
-#line 45 "src/mnlsp.l"
+#line 46 "src/mnlsp.l"
 
-#line 711 "build/mnlsp.yy.cpp"
+#line 712 "build/mnlsp.yy.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -767,131 +768,134 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 46 "src/mnlsp.l"
+#line 47 "src/mnlsp.l"
 {}
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 47 "src/mnlsp.l"
+#line 48 "src/mnlsp.l"
 {}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 49 "src/mnlsp.l"
+#line 50 "src/mnlsp.l"
 {return LP;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 50 "src/mnlsp.l"
+#line 51 "src/mnlsp.l"
 {return RP;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 52 "src/mnlsp.l"
+#line 53 "src/mnlsp.l"
 {return PRINT_NUM_ID;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 53 "src/mnlsp.l"
+#line 54 "src/mnlsp.l"
 {return PRINT_BOOL_ID;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 55 "src/mnlsp.l"
+#line 56 "src/mnlsp.l"
 {return PLUS_ID;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 56 "src/mnlsp.l"
+#line 57 "src/mnlsp.l"
 {return MINUS_ID;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 57 "src/mnlsp.l"
+#line 58 "src/mnlsp.l"
 {return MULTIPLY_ID;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 58 "src/mnlsp.l"
+#line 59 "src/mnlsp.l"
 {return DIVIDE_ID;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 59 "src/mnlsp.l"
+#line 60 "src/mnlsp.l"
 {return MODULUS_ID;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 60 "src/mnlsp.l"
+#line 61 "src/mnlsp.l"
 {return GREATER_ID;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 61 "src/mnlsp.l"
+#line 62 "src/mnlsp.l"
 {return SMALLER_ID;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 62 "src/mnlsp.l"
+#line 63 "src/mnlsp.l"
 {return EQUAL_ID;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 64 "src/mnlsp.l"
+#line 65 "src/mnlsp.l"
 {return AND_ID;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 65 "src/mnlsp.l"
+#line 66 "src/mnlsp.l"
 {return OR_ID;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 66 "src/mnlsp.l"
+#line 67 "src/mnlsp.l"
 {return NOT_ID;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 68 "src/mnlsp.l"
+#line 69 "src/mnlsp.l"
 {return DEFINE_ID;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 70 "src/mnlsp.l"
+#line 71 "src/mnlsp.l"
 {return FUN_ID;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 72 "src/mnlsp.l"
+#line 73 "src/mnlsp.l"
 {return IF_ID;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 74 "src/mnlsp.l"
-{return NUMBER;}
+#line 75 "src/mnlsp.l"
+{yylval.t.d = new mnlsp::Data((int)strtol(yytext, NULL, 10));
+                 return NUMBER;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 75 "src/mnlsp.l"
-{return ID;}
+#line 77 "src/mnlsp.l"
+{yylval.t.s = new std::string(yytext);
+                 return ID;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 76 "src/mnlsp.l"
-{return BOOL_VAL;}
+#line 79 "src/mnlsp.l"
+{yylval.t.d = new mnlsp::Data(yytext[1] == 't');
+                 return BOOL_VAL;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 78 "src/mnlsp.l"
+#line 82 "src/mnlsp.l"
 {}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 80 "src/mnlsp.l"
+#line 84 "src/mnlsp.l"
 ECHO;
 	YY_BREAK
-#line 895 "build/mnlsp.yy.cpp"
+#line 899 "build/mnlsp.yy.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1896,6 +1900,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 80 "src/mnlsp.l"
+#line 84 "src/mnlsp.l"
 
 

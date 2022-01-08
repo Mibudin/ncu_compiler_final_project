@@ -88,12 +88,6 @@ namespace mnlsp
 
     typedef std::map<std::string, Data*> VarPool;
 
-    struct ExpNode
-    {
-        NodeType ntype;
-        unsigned char _[24]; // TODO
-    };
-
     struct LitNode
     {
         const NodeType ntype = NodeType::LIT;
@@ -107,11 +101,38 @@ namespace mnlsp
         std::string vid;
     };
 
+    struct ExpNode
+    {
+        ExpNode(Data data) :
+            ntype{NodeType::LIT} {((LitNode*)this)->data = data;}
+        // ExpNode(const char* vid) :
+        //     ntype{NodeType::VAR} {((VarNode*)this)->vid = std::string(vid);}
+        ExpNode(std::string vid, int _) :
+            ntype{NodeType::VAR} {((VarNode*)this)->vid = vid;}
+
+        NodeType ntype;
+        unsigned char _[24]; // TODO
+    };
+
     struct RTEOtions
     {
         // bool pre_eval = true;
         // bool param_num_uncertain = false;
         int _;  // TODO
+    };
+
+    struct YYType
+    {
+        YYType()=default;
+
+        struct
+        {
+            RTE* r;
+            std::vector<ExpNode*>* v;
+            ExpNode* n;
+            Data* d;
+            std::string* s;
+        } t;
     };
 
 
@@ -121,7 +142,9 @@ namespace mnlsp
     {
     public:
         static RTE* get_base_rte();
+        static Data eval_rte(RTES* rtes, RTE* rte);
 
+        RTE();
         RTE(RTEOtions rteo);
 
         void new_var(const std::string id, const Data data);
@@ -131,9 +154,10 @@ namespace mnlsp
 
         void set_fun(ExpNode* fun);
 
-        void add_param(const std::string id);
-        void add_params(std::vector<std::string> params);
+        void add_params(std::vector<std::string> ids, std::vector<ExpNode*> params);
+        void add_params(std::vector<ExpNode*> params);
         std::vector<Data> get_all_params();
+        // void pull_bif_ppool(RTES* rtes);
 
         Data eval(RTES* rtes);
         void param_eval(RTES* rtes, signed int pn);
@@ -168,6 +192,8 @@ namespace mnlsp
         void enter_env(RTE* rte);
         void leave_env();
         RTE* get_rte(unsigned int from_back);
+
+        Data eval(RTE* rte);
 
     private:
         std::vector<RTE*> rtev;
@@ -242,11 +268,8 @@ namespace mnlsp
 
         Data _define    (RTES* rtes);
     }
-
-    // TODO: Program Run Time Environment
-    // extern RTE prte;
 }
 
-#define YYSTYPE mnlsp::ExpNode
+#define YYSTYPE mnlsp::YYType
 
 #endif

@@ -3,6 +3,16 @@
 
 namespace mnlsp
 {
+    int test()
+    {
+        std::vector<ExpNode*> n;
+        std::vector<std::string> s({"1", "2"});
+        n.insert(n.begin(), nullptr);
+        // n.push_back();
+
+        return 0;
+    }
+
     // ---BEGIN--- From: https://stackoverflow.com/a/26221725
     template<typename ... Args>
     std::string strf(const std::string& format, Args ... args)
@@ -30,9 +40,9 @@ namespace mnlsp
     RTES* mnlsp_init()
     {
         // TODO: Other init?
-        RTE* rte = RTE::get_base_rte();
+        // RTE* rte = RTE::get_base_rte();
         RTES* rtes = new RTES();
-        rtes->enter_env(rte);
+        // rtes->enter_env(rte);
         // TODO: No new_bif in runtime
 
         return rtes;
@@ -46,18 +56,35 @@ namespace mnlsp
         RTE* rte = new RTE(rteo);
         RTE* trte;
         trte = rte->new_bif("_", rteo, bif::_);
+        trte = rte->new_bif("_print-num", rteo, bif::_print_num);
         trte = rte->new_bif("_plus", rteo, bif::_plus);
 
-        VarNode* n = new VarNode();
-        n->vid = "_";
-        rte->set_fun((ExpNode*)n);
+        rte->set_fun(new ExpNode("_", 0));
 
         return rte;
+    }
+
+    Data RTE::eval_rte(RTES* rtes, RTE* rte)
+    {
+        rtes->enter_env(rte);
+        RTE* frte = new RTE(*rte);
+        frte->init();
+        Data data = frte->eval(rtes);
+        rtes->leave_env();
+
+        return data;
+    }
+
+    RTE::RTE()
+    {
+        bif = nullptr;
+        init();
     }
 
     RTE::RTE(RTEOtions rteo)
     {
         this->rteo = rteo;
+        bif = nullptr;
         init();
     }
 
@@ -72,7 +99,7 @@ namespace mnlsp
 
     bool RTE::has_var(const std::string id)
     {
-        return vpool.find(id) == vpool.end();
+        return vpool.find(id) != vpool.end();
     }
     
     Data RTE::get_var(const std::string id)
@@ -86,7 +113,7 @@ namespace mnlsp
 
     void RTE::set_var(const std::string id, const Data data)
     {
-        if(!has_var(id)) *(vpool[id]) = data;
+        if(has_var(id)) *(vpool[id]) = data;
         else throw (ErrPkt){ErrType::VAR_NOT_FOUND, ERRMSG_VAR_NOT_FOUND(id)};
 
         return;
@@ -99,7 +126,7 @@ namespace mnlsp
         return;
     }
 
-    void RTE::add_param(const std::string id)
+    void RTE::add_params(std::vector<std::string> ids, std::vector<ExpNode*> params)
     {
         // TODO: Inject params
         // TODO: Inject eval variable
@@ -108,21 +135,23 @@ namespace mnlsp
         // Bind to parameters literal name and do the body
         // Params cross RTE
 
-        ppool.push_back(id);
-        new_var(id, Data());
-        set_var("_p", Data((int)ppool.size()));
-
-        return;
-    }
-
-    void RTE::add_params(std::vector<std::string> ids)
-    {
         for(std::string id : ids)
         {
             ppool.push_back(id);
             new_var(id, Data());
         }
-        new_var("_p", Data((int)ppool.size()));
+        set_var("_p", Data((int)ppool.size()));
+        this->params.insert(this->params.end(), params.begin(), params.end());
+
+        return;
+    }
+
+    void RTE::add_params(std::vector<ExpNode*> params)
+    {
+        std::vector<std::string> ids;
+        for(int i = 0; i < params.size(); i++)
+            ids.push_back(std::string("_p-") + std::to_string(i));
+        add_params(ids, params);
 
         return;
     }
@@ -135,21 +164,32 @@ namespace mnlsp
         return datas;
     }
 
+    // void RTE::pull_bif_ppool(RTES* rtes)
+    // {
+    //     rtes->get_rte(1)->ppool;
+    //     return;
+    // }
+
     Data RTE::eval(RTES* rtes)
     {
-        rtes->enter_env(this);
+        // rtes->enter_env(this);
         Data data;
-        if(bif != nullptr) data = bif(rtes);
+        if(bif != nullptr)
+        {
+            rtes->leave_env();
+            data = bif(rtes);
+            rtes->enter_env(this);
+        }
         else               data = eval_node(rtes, fun);
         set_var("_v", data);
-        rtes->leave_env();
+        // rtes->leave_env();
 
         return data;
     }
 
     void RTE::param_eval(RTES* rtes, signed int pn)
     {
-        rtes->enter_env(this);
+        // rtes->enter_env(this);
         int pnum = ppool.size();
         std::string pid;
         ExpNode* p;
@@ -163,17 +203,19 @@ namespace mnlsp
             pid = ppool.end()[((pn + 1) % pnum) - 1];
             p = params.end()[((pn + 1) % pnum) - 1];
         }
-        set_var(pid,
-                p->ntype == NodeType::LIT
-                ? ((LitNode*)p)->data
-                : eval_node(rtes, p));
-        rtes->leave_env();
+        // printf("><><param_eval: %s, %d\n", pid.c_str(), (int)p->ntype);
+        set_var(pid, eval_node(rtes, p));
+                // p->ntype == NodeType::LIT
+                // ? ((LitNode*)p)->data
+                // : eval_node(rtes, p));
+        // rtes->leave_env();
 
         return;
     }
 
     void RTE::params_eval(RTES* rtes)
     {
+        // printf("><>params_eval : %d\n", ppool.size());
         for(int i = 0; i < ppool.size(); i++) param_eval(rtes, i);
 
         return;
@@ -181,6 +223,7 @@ namespace mnlsp
 
     Data RTE::eval_data(RTES* rtes, Data data)
     {
+        // printf("><> eval data: %d\n", (int)data.dtype);
         switch(data.dtype)
         {
             case DataType::NUMBER:
@@ -188,11 +231,7 @@ namespace mnlsp
                 return data;
 
             case DataType::FUNCTION:
-            {
-                RTE* rte = new RTE(*data.d.fval);
-                rte->init();
-                return rte->eval(rtes);
-            }
+                return eval_rte(rtes, data.d.fval);
 
             case DataType::UNKNOWN:
             default:
@@ -203,11 +242,13 @@ namespace mnlsp
 
     Data RTE::eval_var(RTES* rtes, const std::string id)
     {
+        // printf("<<< eval var: %s\n", id.c_str());
         return eval_data(rtes, rtes->get_var(id));
     }
 
     Data RTE::eval_node(RTES* rtes, ExpNode* node)
     {
+        // printf("><> eval_node: %p\n", node);
         if(node->ntype == NodeType::LIT)
              return eval_data(rtes, ((LitNode*)node)->data);
         else return eval_var(rtes, ((VarNode*)node)->vid);
@@ -215,7 +256,7 @@ namespace mnlsp
 
     void RTE::init()
     {
-        bif = nullptr;
+        // bif = nullptr;
         vpool.clear();
 
         new_var("_v", Data());
@@ -290,7 +331,15 @@ namespace mnlsp
         if(rtev.size() == 0)
             throw (ErrPkt){ErrType::VAR_NOT_FOUND_G, ERRMSG_NO_MORE_RTE};
 
-        return rtev.end()[((-from_back + 1) % rtev.size()) - 1];
+        return rtev.rbegin()[from_back % rtev.size()];
+    }
+
+    Data RTES::eval(RTE* rte)
+    {
+        // if(rtev.size() == 0)
+        //     throw (ErrPkt){ErrType::VAR_NOT_FOUND_G, ERRMSG_NO_MORE_RTE};
+
+        return RTE::eval_rte(this, rte);
     }
 
     void RTES::init()
@@ -302,7 +351,27 @@ namespace mnlsp
 
     Data bif::_(RTES* rtes)
     {
-        rtes->get_rte(1)->params_eval(rtes);
+        // printf("> _\n");
+        rtes->get_rte(0)->params_eval(rtes);
+        // printf("> _ : %d\n", rtes->get_rte(1)->get_var("_p").d.ival);
+
+        return Data();
+    }
+
+    Data bif::_print_num(RTES* rtes)
+    {
+        // printf("> PLUS\n");
+        RTE* crte = rtes->get_rte(0);
+        crte->params_eval(rtes);
+
+        std::vector<Data> datas = crte->get_all_params();
+        Data d = datas[0];
+
+        if(d.dtype != DataType::NUMBER)
+            throw (ErrPkt){ErrType::TYPE_ERR,
+                    ERRMSG_TYPE_ERR(DataType::NUMBER, d.dtype)};
+
+        fprintf(stdout, "%d\n", d.d.ival);
 
         return Data();
     }
@@ -312,7 +381,8 @@ namespace mnlsp
         // Params: _p-0, _p-1, ...
         // var("_v").set(var("_p-0").get() + get_var("_p-1").get())
 
-        RTE* crte = rtes->get_rte(1);
+        // printf("> PLUS\n");
+        RTE* crte = rtes->get_rte(0);
         crte->params_eval(rtes);
 
         std::vector<Data> datas = crte->get_all_params();

@@ -69,15 +69,11 @@
 #line 3 "src/mnlsp.y" /* yacc.c:337  */
 
 #include<stdio.h>
-
-#include<iostream>
-#include<string>
-
 #include"mnlsp.hpp"
 
 #define DEBUG true
 
-#define ERR_SYN "syntax error"
+// #define ERR_SYN "syntax error"
 
 extern "C"
 {
@@ -85,7 +81,9 @@ extern "C"
     extern int yylex();
 };
 
-#line 89 "build/mnlsp.tab.cpp" /* yacc.c:337  */
+mnlsp::RTE* brte;
+
+#line 87 "build/mnlsp.tab.cpp" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -118,11 +116,11 @@ extern "C"
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 23 "src/mnlsp.y" /* yacc.c:352  */
+#line 21 "src/mnlsp.y" /* yacc.c:352  */
 
 #include"mnlsp.hpp"
 
-#line 126 "build/mnlsp.tab.cpp" /* yacc.c:352  */
+#line 124 "build/mnlsp.tab.cpp" /* yacc.c:352  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -154,11 +152,6 @@ extern int yydebug;
 #endif
 
 /* Value type.  */
-#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
-# define YYSTYPE_IS_TRIVIAL 1
-# define YYSTYPE_IS_DECLARED 1
-#endif
 
 
 extern YYSTYPE yylval;
@@ -457,13 +450,13 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    99,    99,   102,   103,   106,   107,   108,   111,   112,
-     115,   116,   117,   118,   119,   120,   121,   122,   126,   127,
-     131,   134,   138,   139,   140,   141,   142,   143,   144,   145,
-     148,   151,   154,   157,   160,   163,   166,   169,   173,   174,
-     175,   178,   181,   184,   188,   191,   192,   195,   196,   199,
-     200,   203,   204,   207,   208,   211,   217,   221,   224,   227,
-     230
+       0,    97,    97,   104,   105,   108,   109,   110,   113,   114,
+     117,   118,   119,   120,   121,   122,   123,   124,   128,   136,
+     140,   143,   147,   148,   149,   150,   151,   152,   153,   154,
+     157,   168,   171,   174,   177,   180,   183,   186,   190,   191,
+     192,   195,   198,   201,   205,   208,   209,   212,   213,   216,
+     217,   220,   221,   224,   225,   228,   234,   238,   241,   244,
+     247
 };
 #endif
 
@@ -528,8 +521,8 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,    11,    21,    10,     0,     0,     2,     4,     5,     7,
-       6,    12,    13,    22,    23,    24,    25,    26,    27,    28,
+       0,    11,    21,    10,     0,     0,     2,     4,     5,     6,
+       7,    12,    13,    22,    23,    24,    25,    26,    27,    28,
       29,    14,    38,    39,    40,    15,    16,    17,    56,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,    54,    54,     1,     3,
@@ -1324,349 +1317,368 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 99 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1330 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 97 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).r = mnlsp::RTE::get_base_rte();
+        (yyval.t).r->add_params(*(yyvsp[0].t).v);
+        brte = (yyval.t).r;
+    }
+#line 1327 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 3:
-#line 102 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1336 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 104 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).v->push_back((yyvsp[-1].t).n); (yyval.t).v->insert((yyval.t).v->end(), (yyvsp[0].t).v->begin(), (yyvsp[0].t).v->end());}
+#line 1333 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 4:
-#line 103 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1342 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 105 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).v = new std::vector<mnlsp::ExpNode*>(); (yyval.t).v->push_back((yyvsp[0].t).n);}
+#line 1339 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 5:
-#line 106 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1348 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 108 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = (yyvsp[0].t).n;}
+#line 1345 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 6:
-#line 107 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1354 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 109 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = new mnlsp::ExpNode(mnlsp::Data((yyvsp[0].t).r));}
+#line 1351 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 7:
-#line 108 "src/mnlsp.y" /* yacc.c:1652  */
+#line 110 "src/mnlsp.y" /* yacc.c:1652  */
     {}
-#line 1360 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1357 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 8:
-#line 111 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1366 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 113 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).v->push_back((yyvsp[-1].t).n); (yyval.t).v->insert((yyval.t).v->end(), (yyvsp[0].t).v->begin(), (yyvsp[0].t).v->end());}
+#line 1363 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 112 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1372 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 114 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).v = new std::vector<mnlsp::ExpNode*>(); (yyval.t).v->push_back((yyvsp[0].t).n);}
+#line 1369 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 115 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1378 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 117 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = new mnlsp::ExpNode(*(yyvsp[0].t).d);}
+#line 1375 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 11:
-#line 116 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1384 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 118 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = new mnlsp::ExpNode(*(yyvsp[0].t).d);}
+#line 1381 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 12:
-#line 117 "src/mnlsp.y" /* yacc.c:1652  */
+#line 119 "src/mnlsp.y" /* yacc.c:1652  */
     {}
-#line 1390 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1387 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 13:
-#line 118 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1396 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 120 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = new mnlsp::ExpNode(mnlsp::Data((yyvsp[0].t).r));}
+#line 1393 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 14:
-#line 119 "src/mnlsp.y" /* yacc.c:1652  */
+#line 121 "src/mnlsp.y" /* yacc.c:1652  */
     {}
-#line 1402 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1399 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 15:
-#line 120 "src/mnlsp.y" /* yacc.c:1652  */
+#line 122 "src/mnlsp.y" /* yacc.c:1652  */
     {}
-#line 1408 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1405 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 16:
-#line 121 "src/mnlsp.y" /* yacc.c:1652  */
+#line 123 "src/mnlsp.y" /* yacc.c:1652  */
     {}
-#line 1414 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1411 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 17:
-#line 122 "src/mnlsp.y" /* yacc.c:1652  */
+#line 124 "src/mnlsp.y" /* yacc.c:1652  */
     {}
-#line 1420 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1417 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 18:
-#line 126 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1426 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 128 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = new std::vector<mnlsp::ExpNode*>(); 
+        (yyval.t).v->push_back((yyvsp[-1].t).n);
+
+        (yyval.t).r = new mnlsp::RTE();
+        (yyval.t).r->set_fun(new mnlsp::ExpNode("_print-num", 0));
+        (yyval.t).r->add_params(*(yyval.t).v);
+    }
+#line 1430 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 19:
-#line 127 "src/mnlsp.y" /* yacc.c:1652  */
+#line 136 "src/mnlsp.y" /* yacc.c:1652  */
     {}
-#line 1432 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1436 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 20:
-#line 131 "src/mnlsp.y" /* yacc.c:1652  */
+#line 140 "src/mnlsp.y" /* yacc.c:1652  */
     {}
-#line 1438 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1442 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 21:
-#line 134 "src/mnlsp.y" /* yacc.c:1652  */
+#line 143 "src/mnlsp.y" /* yacc.c:1652  */
     {}
-#line 1444 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1448 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 22:
-#line 138 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1450 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 147 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).r = (yyvsp[0].t).r;}
+#line 1454 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 23:
-#line 139 "src/mnlsp.y" /* yacc.c:1652  */
+#line 148 "src/mnlsp.y" /* yacc.c:1652  */
     {}
-#line 1456 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1460 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 24:
-#line 140 "src/mnlsp.y" /* yacc.c:1652  */
+#line 149 "src/mnlsp.y" /* yacc.c:1652  */
     {}
-#line 1462 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1466 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 25:
-#line 141 "src/mnlsp.y" /* yacc.c:1652  */
+#line 150 "src/mnlsp.y" /* yacc.c:1652  */
     {}
-#line 1468 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1472 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 26:
-#line 142 "src/mnlsp.y" /* yacc.c:1652  */
+#line 151 "src/mnlsp.y" /* yacc.c:1652  */
     {}
-#line 1474 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1478 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 27:
-#line 143 "src/mnlsp.y" /* yacc.c:1652  */
+#line 152 "src/mnlsp.y" /* yacc.c:1652  */
     {}
-#line 1480 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1484 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 28:
-#line 144 "src/mnlsp.y" /* yacc.c:1652  */
+#line 153 "src/mnlsp.y" /* yacc.c:1652  */
     {}
-#line 1486 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1490 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 29:
-#line 145 "src/mnlsp.y" /* yacc.c:1652  */
+#line 154 "src/mnlsp.y" /* yacc.c:1652  */
     {}
-#line 1492 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1496 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 30:
-#line 148 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1498 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
+#line 157 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = new std::vector<mnlsp::ExpNode*>();
+        (yyval.t).v->push_back((yyvsp[-2].t).n);
+        (yyval.t).v->insert((yyval.t).v->end(), (yyvsp[-1].t).v->begin(), (yyvsp[-1].t).v->end());
 
-  case 31:
-#line 151 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1504 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 32:
-#line 154 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
+        (yyval.t).r = new mnlsp::RTE();
+        (yyval.t).r->set_fun(new mnlsp::ExpNode("_plus", 0));
+        (yyval.t).r->add_params(*(yyval.t).v);
+    }
 #line 1510 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 33:
-#line 157 "src/mnlsp.y" /* yacc.c:1652  */
+  case 31:
+#line 168 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1516 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 34:
-#line 160 "src/mnlsp.y" /* yacc.c:1652  */
+  case 32:
+#line 171 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1522 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 35:
-#line 163 "src/mnlsp.y" /* yacc.c:1652  */
+  case 33:
+#line 174 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1528 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 36:
-#line 166 "src/mnlsp.y" /* yacc.c:1652  */
+  case 34:
+#line 177 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1534 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 37:
-#line 169 "src/mnlsp.y" /* yacc.c:1652  */
+  case 35:
+#line 180 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1540 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 38:
-#line 173 "src/mnlsp.y" /* yacc.c:1652  */
+  case 36:
+#line 183 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1546 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 39:
-#line 174 "src/mnlsp.y" /* yacc.c:1652  */
+  case 37:
+#line 186 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1552 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 40:
-#line 175 "src/mnlsp.y" /* yacc.c:1652  */
+  case 38:
+#line 190 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1558 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 41:
-#line 178 "src/mnlsp.y" /* yacc.c:1652  */
+  case 39:
+#line 191 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1564 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 42:
-#line 181 "src/mnlsp.y" /* yacc.c:1652  */
+  case 40:
+#line 192 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1570 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 43:
-#line 184 "src/mnlsp.y" /* yacc.c:1652  */
+  case 41:
+#line 195 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1576 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 44:
-#line 188 "src/mnlsp.y" /* yacc.c:1652  */
+  case 42:
+#line 198 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1582 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 45:
-#line 191 "src/mnlsp.y" /* yacc.c:1652  */
+  case 43:
+#line 201 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1588 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 46:
-#line 192 "src/mnlsp.y" /* yacc.c:1652  */
+  case 44:
+#line 205 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1594 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 47:
-#line 195 "src/mnlsp.y" /* yacc.c:1652  */
+  case 45:
+#line 208 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1600 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 49:
-#line 199 "src/mnlsp.y" /* yacc.c:1652  */
+  case 46:
+#line 209 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1606 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 50:
-#line 200 "src/mnlsp.y" /* yacc.c:1652  */
+  case 47:
+#line 212 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1612 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 51:
-#line 203 "src/mnlsp.y" /* yacc.c:1652  */
+  case 49:
+#line 216 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1618 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 52:
-#line 204 "src/mnlsp.y" /* yacc.c:1652  */
+  case 50:
+#line 217 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1624 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 53:
-#line 207 "src/mnlsp.y" /* yacc.c:1652  */
+  case 51:
+#line 220 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1630 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 55:
-#line 211 "src/mnlsp.y" /* yacc.c:1652  */
+  case 52:
+#line 221 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1636 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 56:
-#line 217 "src/mnlsp.y" /* yacc.c:1652  */
+  case 53:
+#line 224 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1642 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 57:
-#line 221 "src/mnlsp.y" /* yacc.c:1652  */
+  case 55:
+#line 228 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1648 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 58:
-#line 224 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
+  case 56:
+#line 234 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = new mnlsp::ExpNode(*(yyvsp[0].t).s, 0);}
 #line 1654 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 59:
-#line 227 "src/mnlsp.y" /* yacc.c:1652  */
+  case 57:
+#line 238 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1660 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 60:
-#line 230 "src/mnlsp.y" /* yacc.c:1652  */
+  case 58:
+#line 241 "src/mnlsp.y" /* yacc.c:1652  */
     {}
 #line 1666 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
+  case 59:
+#line 244 "src/mnlsp.y" /* yacc.c:1652  */
+    {}
+#line 1672 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
 
-#line 1670 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+  case 60:
+#line 247 "src/mnlsp.y" /* yacc.c:1652  */
+    {}
+#line 1678 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+
+#line 1682 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1897,11 +1909,13 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 233 "src/mnlsp.y" /* yacc.c:1918  */
+#line 250 "src/mnlsp.y" /* yacc.c:1918  */
 
 void yyerror(const char* msg)
 {
     #if DEBUG
+        fprintf(stderr, "%s\n", msg);
+    #else
         fprintf(stderr, "%s\n", msg);
     #endif
     exit(0);
@@ -1911,7 +1925,18 @@ void yyerror(const char* msg)
 
 int main()
 {
-    /* yyparse(); */
+    mnlsp::RTES* prtes = mnlsp::mnlsp_init();
+
+    try
+    {
+        yyparse();
+        prtes->eval(brte);
+        /* printf(">>>\n"); */
+    }
+    catch(mnlsp::ErrPkt ep)
+    {
+        yyerror(ep.msg.c_str());
+    }
 
     return 0;
 }
