@@ -393,16 +393,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  48
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   134
+#define YYLAST   133
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  24
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  34
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  60
+#define YYNRULES  59
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  120
+#define YYNSTATES  118
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   278
@@ -448,15 +448,14 @@ static const yytype_uint8 yytranslate[] =
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_uint16 yyrline[] =
 {
-       0,    97,    97,   104,   105,   108,   109,   110,   113,   114,
-     117,   118,   119,   120,   121,   122,   123,   124,   128,   136,
-     140,   143,   147,   148,   149,   150,   151,   152,   153,   154,
-     157,   168,   171,   174,   177,   180,   183,   186,   190,   191,
-     192,   195,   198,   201,   205,   208,   209,   212,   213,   216,
-     217,   220,   221,   224,   225,   228,   234,   238,   241,   244,
-     247
+       0,    98,    98,   106,   111,   117,   118,   119,   122,   127,
+     133,   134,   135,   136,   137,   138,   139,   140,   144,   149,
+     157,   164,   171,   172,   173,   174,   175,   176,   177,   178,
+     181,   189,   196,   204,   211,   218,   225,   232,   241,   242,
+     243,   246,   254,   262,   270,   278,   284,   285,   288,   292,
+     299,   308,   316,   321,   324,   330,   334,   341,   344,   347
 };
 #endif
 
@@ -502,18 +501,18 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       8,   -53,   -53,   -53,    91,     4,   -53,     8,   -53,   -53,
+       8,   -53,   -53,   -53,    90,     4,   -53,     8,   -53,   -53,
      -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,
      -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,   -17,
       12,    12,    12,    12,    12,    12,    12,    12,    12,    12,
-      12,    12,    12,     2,    21,    12,    12,    12,   -53,   -53,
-     111,    22,    36,    12,    12,    12,    12,    12,    12,    12,
-      12,    12,    12,    12,    12,    19,    16,   -53,    12,   -53,
-      37,    12,    42,   -53,   -53,    43,    12,    44,    45,    46,
-      48,    53,    54,    55,    58,    65,    80,    81,    24,   -53,
-      83,    63,   -53,    12,    84,   -53,    12,   -53,   -53,   -53,
+      12,    12,    12,     2,    17,    12,    12,    12,   -53,   -53,
+     110,    19,    20,    12,    12,    12,    12,    12,    12,    12,
+      12,    12,    12,    21,    12,    25,    16,   -53,    12,   -53,
+      36,    12,    37,   -53,   -53,    42,    12,    43,    44,    45,
+      46,    48,    53,    54,    55,    56,   -53,    58,    25,    65,
+      63,   -53,    12,    80,   -53,    12,   -53,   -53,   -53,   -53,
      -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,
-     -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,    85,   -53
+     -53,   -53,   -53,   -53,   -53,   -53,    82,   -53
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -523,24 +522,24 @@ static const yytype_uint8 yydefact[] =
 {
        0,    11,    21,    10,     0,     0,     2,     4,     5,     6,
        7,    12,    13,    22,    23,    24,    25,    26,    27,    28,
-      29,    14,    38,    39,    40,    15,    16,    17,    56,     0,
+      29,    14,    38,    39,    40,    15,    16,    17,    55,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,    54,    54,     1,     3,
+       0,     0,     0,     0,     0,     0,    53,    53,     1,     3,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,    58,     0,    55,
-       0,    54,     0,    18,    19,     0,     9,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,    48,    46,
-       0,     0,    50,     0,     0,    59,     0,    51,    53,    52,
-      30,     8,    31,    32,    33,    34,    35,    36,    37,    41,
-      42,    43,    20,    47,    45,    49,    44,    60,     0,    57
+       0,     0,     0,     0,     0,    47,     0,    57,     0,    54,
+       0,    53,     0,    18,    19,     0,     9,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,    43,     0,    47,     0,
+       0,    49,     0,     0,    58,     0,    50,    52,    51,    30,
+       8,    31,    32,    33,    34,    35,    36,    37,    41,    42,
+      20,    46,    45,    48,    44,    59,     0,    56
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -53,   -53,    87,   -53,   -52,     0,   -53,    32,    27,   -53,
+     -53,   -53,    83,   -53,   -52,     0,   -53,    27,    72,   -53,
      -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,
-     -53,   -53,    -2,   -53,    28,   -53,   -53,   -46,   -53,   -53,
+     -53,   -53,    -2,   -53,   -18,   -53,   -53,   -46,   -53,   -53,
      -53,   -53,   -53,   -53
 };
 
@@ -549,8 +548,8 @@ static const yytype_int8 yydefgoto[] =
 {
       -1,     5,     6,     7,    75,    76,     9,    10,    11,    12,
       13,    14,    15,    16,    17,    18,    19,    20,    21,    22,
-      23,    24,    25,    66,    90,    94,    26,    70,    71,    47,
-      27,    68,    96,   118
+      23,    24,    25,    66,    89,    93,    26,    70,    71,    47,
+      27,    68,    95,   116
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -560,36 +559,36 @@ static const yytype_uint8 yytable[] =
 {
        8,    72,    46,    78,    48,    44,     2,     8,    83,    84,
       85,     1,     2,     3,     4,     1,     2,     3,    50,     1,
-       2,     3,    91,    88,   101,    98,    89,    65,    88,    73,
+       2,     3,    90,    65,   100,    97,    73,    74,    86,    88,
       51,    52,    53,    54,    55,    56,    57,    58,    59,    60,
-      61,    62,    63,    74,    97,    67,    69,    69,    46,    99,
-     100,   102,   103,   104,    77,   105,    79,    80,    81,    82,
-     106,   107,   108,    86,    87,   109,    92,    28,    95,    29,
-      64,    69,   110,    32,    33,    34,    35,    36,    37,    38,
-      39,    40,    41,    42,    43,    44,    45,   111,   112,    46,
-     114,   116,   119,   115,    49,    28,   117,    29,    93,    30,
-      31,    32,    33,    34,    35,    36,    37,    38,    39,    40,
-      41,    42,    43,    44,    45,    28,   113,    29,     0,     0,
-       0,    32,    33,    34,    35,    36,    37,    38,    39,    40,
-      41,    42,     0,    44,    45
+      61,    62,    63,    96,    98,    67,    69,    69,    46,    99,
+     101,   102,   103,   104,    77,   105,    79,    80,    81,    82,
+     106,   107,   108,   109,    87,   110,    91,    28,    94,    29,
+     111,    69,   112,    32,    33,    34,    35,    36,    37,    38,
+      39,    40,    41,    42,    43,    44,    45,   114,    46,   117,
+      49,     0,   113,    92,    28,   115,    29,     0,    30,    31,
+      32,    33,    34,    35,    36,    37,    38,    39,    40,    41,
+      42,    43,    44,    45,    28,    64,    29,     0,     0,     0,
+      32,    33,    34,    35,    36,    37,    38,    39,    40,    41,
+      42,     0,    44,    45
 };
 
 static const yytype_int8 yycheck[] =
 {
        0,    47,     4,    55,     0,    22,     4,     7,    60,    61,
       62,     3,     4,     5,     6,     3,     4,     5,     6,     3,
-       4,     5,     6,     4,    76,    71,     7,     6,     4,     7,
+       4,     5,     6,     6,    76,    71,     7,     7,     7,     4,
       30,    31,    32,    33,    34,    35,    36,    37,    38,    39,
       40,    41,    42,     7,     7,    45,    46,    47,    50,     7,
        7,     7,     7,     7,    54,     7,    56,    57,    58,    59,
-       7,     7,     7,    63,    64,     7,    66,     4,    68,     6,
-      43,    71,     7,    10,    11,    12,    13,    14,    15,    16,
-      17,    18,    19,    20,    21,    22,    23,     7,     7,    91,
-       7,     7,     7,    93,     7,     4,    96,     6,    66,     8,
-       9,    10,    11,    12,    13,    14,    15,    16,    17,    18,
-      19,    20,    21,    22,    23,     4,    88,     6,    -1,    -1,
-      -1,    10,    11,    12,    13,    14,    15,    16,    17,    18,
-      19,    20,    -1,    22,    23
+       7,     7,     7,     7,    64,     7,    66,     4,    68,     6,
+      88,    71,     7,    10,    11,    12,    13,    14,    15,    16,
+      17,    18,    19,    20,    21,    22,    23,     7,    90,     7,
+       7,    -1,    92,    66,     4,    95,     6,    -1,     8,     9,
+      10,    11,    12,    13,    14,    15,    16,    17,    18,    19,
+      20,    21,    22,    23,     4,    43,     6,    -1,    -1,    -1,
+      10,    11,    12,    13,    14,    15,    16,    17,    18,    19,
+      20,    -1,    22,    23
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -604,10 +603,10 @@ static const yytype_uint8 yystos[] =
        6,    29,    29,    29,    29,    29,    29,    29,    29,    29,
       29,    29,    29,    29,    32,     6,    47,    29,    55,    29,
       51,    52,    51,     7,     7,    28,    29,    29,    28,    29,
-      29,    29,    29,    28,    28,    28,    29,    29,     4,     7,
-      48,     6,    29,    31,    49,    29,    56,     7,    51,     7,
-       7,    28,     7,     7,     7,     7,     7,     7,     7,     7,
-       7,     7,     7,    48,     7,    29,     7,    29,    57,     7
+      29,    29,    29,    28,    28,    28,     7,    29,     4,    48,
+       6,    29,    31,    49,    29,    56,     7,    51,     7,     7,
+      28,     7,     7,     7,     7,     7,     7,     7,     7,     7,
+       7,    48,     7,    29,     7,    29,    57,     7
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -617,9 +616,8 @@ static const yytype_uint8 yyr1[] =
       29,    29,    29,    29,    29,    29,    29,    29,    30,    30,
       31,    32,    33,    33,    33,    33,    33,    33,    33,    33,
       34,    35,    36,    37,    38,    39,    40,    41,    42,    42,
-      42,    43,    44,    45,    46,    47,    47,    48,    48,    49,
-      49,    50,    50,    51,    51,    52,    53,    54,    55,    56,
-      57
+      42,    43,    44,    45,    46,    47,    48,    48,    49,    49,
+      50,    50,    51,    51,    52,    53,    54,    55,    56,    57
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -629,9 +627,8 @@ static const yytype_uint8 yyr2[] =
        1,     1,     1,     1,     1,     1,     1,     1,     4,     4,
        5,     1,     1,     1,     1,     1,     1,     1,     1,     1,
        5,     5,     5,     5,     5,     5,     5,     5,     1,     1,
-       1,     5,     5,     5,     5,     3,     2,     2,     0,     2,
-       1,     4,     4,     2,     0,     1,     1,     6,     1,     1,
-       1
+       1,     5,     5,     4,     5,     3,     2,     0,     2,     1,
+       4,     4,     2,     0,     1,     1,     6,     1,     1,     1
 };
 
 
@@ -1317,368 +1314,473 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 97 "src/mnlsp.y" /* yacc.c:1652  */
+#line 98 "src/mnlsp.y" /* yacc.c:1652  */
     {
         (yyval.t).r = mnlsp::RTE::get_base_rte();
         (yyval.t).r->add_params(*(yyvsp[0].t).v);
         brte = (yyval.t).r;
+        printf(">>>\n");
     }
-#line 1327 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1325 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 3:
-#line 104 "src/mnlsp.y" /* yacc.c:1652  */
-    {(yyval.t).v->push_back((yyvsp[-1].t).n); (yyval.t).v->insert((yyval.t).v->end(), (yyvsp[0].t).v->begin(), (yyvsp[0].t).v->end());}
-#line 1333 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 106 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-1].t).n);
+        mnlsp::utl::v_concat((yyval.t).v, (yyvsp[0].t).v);
+    }
+#line 1335 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 4:
-#line 105 "src/mnlsp.y" /* yacc.c:1652  */
-    {(yyval.t).v = new std::vector<mnlsp::ExpNode*>(); (yyval.t).v->push_back((yyvsp[0].t).n);}
-#line 1339 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 111 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[0].t).n);
+    }
+#line 1344 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 5:
-#line 108 "src/mnlsp.y" /* yacc.c:1652  */
+#line 117 "src/mnlsp.y" /* yacc.c:1652  */
     {(yyval.t).n = (yyvsp[0].t).n;}
-#line 1345 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1350 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 6:
-#line 109 "src/mnlsp.y" /* yacc.c:1652  */
+#line 118 "src/mnlsp.y" /* yacc.c:1652  */
     {(yyval.t).n = new mnlsp::ExpNode(mnlsp::Data((yyvsp[0].t).r));}
-#line 1351 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1356 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 7:
-#line 110 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1357 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 119 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = new mnlsp::ExpNode(mnlsp::Data((yyvsp[0].t).r));}
+#line 1362 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 8:
-#line 113 "src/mnlsp.y" /* yacc.c:1652  */
-    {(yyval.t).v->push_back((yyvsp[-1].t).n); (yyval.t).v->insert((yyval.t).v->end(), (yyvsp[0].t).v->begin(), (yyvsp[0].t).v->end());}
-#line 1363 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 122 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-1].t).n);
+        mnlsp::utl::v_concat((yyval.t).v, (yyvsp[0].t).v);
+    }
+#line 1372 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 114 "src/mnlsp.y" /* yacc.c:1652  */
-    {(yyval.t).v = new std::vector<mnlsp::ExpNode*>(); (yyval.t).v->push_back((yyvsp[0].t).n);}
-#line 1369 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 10:
-#line 117 "src/mnlsp.y" /* yacc.c:1652  */
-    {(yyval.t).n = new mnlsp::ExpNode(*(yyvsp[0].t).d);}
-#line 1375 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 11:
-#line 118 "src/mnlsp.y" /* yacc.c:1652  */
-    {(yyval.t).n = new mnlsp::ExpNode(*(yyvsp[0].t).d);}
+#line 127 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[0].t).n);
+    }
 #line 1381 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 12:
-#line 119 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
+  case 10:
+#line 133 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = new mnlsp::ExpNode(*(yyvsp[0].t).d);}
 #line 1387 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 13:
-#line 120 "src/mnlsp.y" /* yacc.c:1652  */
-    {(yyval.t).n = new mnlsp::ExpNode(mnlsp::Data((yyvsp[0].t).r));}
+  case 11:
+#line 134 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = new mnlsp::ExpNode(*(yyvsp[0].t).d);}
 #line 1393 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 14:
-#line 121 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
+  case 12:
+#line 135 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = (yyvsp[0].t).n;}
 #line 1399 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 15:
-#line 122 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
+  case 13:
+#line 136 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = new mnlsp::ExpNode(mnlsp::Data((yyvsp[0].t).r));}
 #line 1405 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 16:
-#line 123 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
+  case 14:
+#line 137 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = new mnlsp::ExpNode(mnlsp::Data((yyvsp[0].t).r));}
 #line 1411 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 17:
-#line 124 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
+  case 15:
+#line 138 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = new mnlsp::ExpNode(mnlsp::Data((yyvsp[0].t).r));}
 #line 1417 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 18:
-#line 128 "src/mnlsp.y" /* yacc.c:1652  */
-    {
-        (yyval.t).v = new std::vector<mnlsp::ExpNode*>(); 
-        (yyval.t).v->push_back((yyvsp[-1].t).n);
+  case 16:
+#line 139 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = new mnlsp::ExpNode(mnlsp::Data((yyvsp[0].t).r));}
+#line 1423 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
 
-        (yyval.t).r = new mnlsp::RTE();
-        (yyval.t).r->set_fun(new mnlsp::ExpNode("_print-num", 0));
-        (yyval.t).r->add_params(*(yyval.t).v);
+  case 17:
+#line 140 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = new mnlsp::ExpNode(mnlsp::Data((yyvsp[0].t).r));}
+#line 1429 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 18:
+#line 144 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-1].t).n);
+        (yyval.t).r = mnlsp::RTE::get_var_fun_rte("_print-num", *(yyval.t).v);
     }
-#line 1430 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1439 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 19:
-#line 136 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1436 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 149 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-1].t).n);
+        (yyval.t).r = mnlsp::RTE::get_var_fun_rte("_print-bool", *(yyval.t).v);
+    }
+#line 1449 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 20:
-#line 140 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1442 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 157 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-2].t).n); (yyval.t).v->push_back((yyvsp[-1].t).n);
+        (yyval.t).r = mnlsp::RTE::get_var_fun_rte("_define", *(yyval.t).v);
+    }
+#line 1459 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 21:
-#line 143 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1448 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 164 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).n = (mnlsp::ExpNode*)(new mnlsp::VarNode());
+        ((mnlsp::VarNode*)(yyval.t).n)->vid = *(yyvsp[0].t).s;
+    }
+#line 1468 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 22:
-#line 147 "src/mnlsp.y" /* yacc.c:1652  */
+#line 171 "src/mnlsp.y" /* yacc.c:1652  */
     {(yyval.t).r = (yyvsp[0].t).r;}
-#line 1454 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1474 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 23:
-#line 148 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1460 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 172 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).r = (yyvsp[0].t).r;}
+#line 1480 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 24:
-#line 149 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1466 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 173 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).r = (yyvsp[0].t).r;}
+#line 1486 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 25:
-#line 150 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1472 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 174 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).r = (yyvsp[0].t).r;}
+#line 1492 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 26:
-#line 151 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1478 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 175 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).r = (yyvsp[0].t).r;}
+#line 1498 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 27:
-#line 152 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1484 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 176 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).r = (yyvsp[0].t).r;}
+#line 1504 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 28:
-#line 153 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1490 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 29:
-#line 154 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1496 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 30:
-#line 157 "src/mnlsp.y" /* yacc.c:1652  */
-    {
-        (yyval.t).v = new std::vector<mnlsp::ExpNode*>();
-        (yyval.t).v->push_back((yyvsp[-2].t).n);
-        (yyval.t).v->insert((yyval.t).v->end(), (yyvsp[-1].t).v->begin(), (yyvsp[-1].t).v->end());
-
-        (yyval.t).r = new mnlsp::RTE();
-        (yyval.t).r->set_fun(new mnlsp::ExpNode("_plus", 0));
-        (yyval.t).r->add_params(*(yyval.t).v);
-    }
+#line 177 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).r = (yyvsp[0].t).r;}
 #line 1510 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 31:
-#line 168 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
+  case 29:
+#line 178 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).r = (yyvsp[0].t).r;}
 #line 1516 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
+  case 30:
+#line 181 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-2].t).n);
+        mnlsp::utl::v_concat((yyval.t).v, (yyvsp[-1].t).v);
+        (yyval.t).r = mnlsp::RTE::get_var_fun_rte("_plus", *(yyval.t).v);
+    }
+#line 1527 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 31:
+#line 189 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-2].t).n); (yyval.t).v->push_back((yyvsp[-1].t).n);
+        (yyval.t).r = mnlsp::RTE::get_var_fun_rte("_minus", *(yyval.t).v);
+    }
+#line 1537 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
   case 32:
-#line 171 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1522 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 196 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-2].t).n);
+        mnlsp::utl::v_concat((yyval.t).v, (yyvsp[-1].t).v);
+        (yyval.t).r = mnlsp::RTE::get_var_fun_rte("_multiply", *(yyval.t).v);
+    }
+#line 1548 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 33:
-#line 174 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1528 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 34:
-#line 177 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1534 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 35:
-#line 180 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1540 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 36:
-#line 183 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1546 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 37:
-#line 186 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1552 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 38:
-#line 190 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
+#line 204 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-2].t).n); (yyval.t).v->push_back((yyvsp[-1].t).n);
+        (yyval.t).r = mnlsp::RTE::get_var_fun_rte("_divide", *(yyval.t).v);
+    }
 #line 1558 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 39:
-#line 191 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1564 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+  case 34:
+#line 211 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-2].t).n); (yyval.t).v->push_back((yyvsp[-1].t).n);
+        (yyval.t).r = mnlsp::RTE::get_var_fun_rte("_modulus", *(yyval.t).v);
+    }
+#line 1568 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 40:
-#line 192 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1570 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+  case 35:
+#line 218 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-2].t).n); (yyval.t).v->push_back((yyvsp[-1].t).n);
+        (yyval.t).r = mnlsp::RTE::get_var_fun_rte("_greater", *(yyval.t).v);
+    }
+#line 1578 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
-  case 41:
-#line 195 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1576 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 42:
-#line 198 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1582 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 43:
-#line 201 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
+  case 36:
+#line 225 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-2].t).n); (yyval.t).v->push_back((yyvsp[-1].t).n);
+        (yyval.t).r = mnlsp::RTE::get_var_fun_rte("_smaller", *(yyval.t).v);
+    }
 #line 1588 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
+  case 37:
+#line 232 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-2].t).n);
+        mnlsp::utl::v_concat((yyval.t).v, (yyvsp[-1].t).v);
+        (yyval.t).r = mnlsp::RTE::get_var_fun_rte("_equal", *(yyval.t).v);
+    }
+#line 1599 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 38:
+#line 241 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).r = (yyvsp[0].t).r;}
+#line 1605 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 39:
+#line 242 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).r = (yyvsp[0].t).r;}
+#line 1611 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 40:
+#line 243 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).r = (yyvsp[0].t).r;}
+#line 1617 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 41:
+#line 246 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-2].t).n);
+        mnlsp::utl::v_concat((yyval.t).v, (yyvsp[-1].t).v);
+        (yyval.t).r = mnlsp::RTE::get_var_fun_rte("_and", *(yyval.t).v);
+    }
+#line 1628 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 42:
+#line 254 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-2].t).n);
+        mnlsp::utl::v_concat((yyval.t).v, (yyvsp[-1].t).v);
+        (yyval.t).r = mnlsp::RTE::get_var_fun_rte("_or", *(yyval.t).v);
+    }
+#line 1639 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 43:
+#line 262 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-1].t).n);
+        (yyval.t).r = mnlsp::RTE::get_var_fun_rte("_not", *(yyval.t).v);
+    }
+#line 1649 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
   case 44:
-#line 205 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1594 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 45:
-#line 208 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1600 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 46:
-#line 209 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1606 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 47:
-#line 212 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1612 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 49:
-#line 216 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1618 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 50:
-#line 217 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1624 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 51:
-#line 220 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1630 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 52:
-#line 221 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1636 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 53:
-#line 224 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1642 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 55:
-#line 228 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1648 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 56:
-#line 234 "src/mnlsp.y" /* yacc.c:1652  */
-    {(yyval.t).n = new mnlsp::ExpNode(*(yyvsp[0].t).s, 0);}
-#line 1654 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 57:
-#line 238 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
+#line 270 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-2].t).n);
+        mnlsp::utl::v_concat((yyval.t).v, (yyvsp[-1].t).v);
+        (yyval.t).r = mnlsp::RTE::get_var_fun_rte("_fun", *(yyval.t).v);
+    }
 #line 1660 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
+  case 45:
+#line 278 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).n = (mnlsp::ExpNode*)(new mnlsp::VarNode());
+        ((mnlsp::VarNode*)(yyval.t).n)->vid = "_p" + *(yyvsp[-1].t).s;
+    }
+#line 1669 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 46:
+#line 284 "src/mnlsp.y" /* yacc.c:1652  */
+    {*(yyval.t).s = "_" + *(yyvsp[-1].t).s + *(yyvsp[0].t).s;}
+#line 1675 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 47:
+#line 285 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).s = new std::string();}
+#line 1681 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 48:
+#line 288 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-1].t).n); (yyval.t).v->push_back((yyvsp[0].t).n);
+    }
+#line 1690 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 49:
+#line 292 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[0].t).n);
+    }
+#line 1699 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 50:
+#line 299 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        // $$.r = new mnlsp::RTE();
+        // $$.r->set_fun(new mnlsp::ExpNode());
+        // $$.r->add_params(*$3.v, true);
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back(new mnlsp::ExpNode(mnlsp::Data((yyvsp[-2].t).r)));
+        mnlsp::utl::v_concat((yyval.t).v, (yyvsp[-1].t).v);
+        (yyval.t).r = mnlsp::RTE::get_var_fun_rte("_fun_call", *(yyval.t).v);
+    }
+#line 1713 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 51:
+#line 308 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back(new mnlsp::ExpNode(*(yyvsp[-2].t).s, 0));
+        mnlsp::utl::v_concat((yyval.t).v, (yyvsp[-1].t).v);
+        (yyval.t).r = mnlsp::RTE::get_var_fun_rte("_fun_call", *(yyval.t).v);
+    }
+#line 1724 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 52:
+#line 316 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-1].t).n);
+        mnlsp::utl::v_concat((yyval.t).v, (yyvsp[0].t).v);
+    }
+#line 1734 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 53:
+#line 321 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).v = mnlsp::utl::v_new();}
+#line 1740 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 54:
+#line 324 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = (yyvsp[0].t).n;}
+#line 1746 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 55:
+#line 330 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).s = (yyvsp[0].t).s;}
+#line 1752 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 56:
+#line 334 "src/mnlsp.y" /* yacc.c:1652  */
+    {
+        (yyval.t).v = mnlsp::utl::v_new();
+        (yyval.t).v->push_back((yyvsp[-3].t).n); (yyval.t).v->push_back((yyvsp[-2].t).n); (yyval.t).v->push_back((yyvsp[-1].t).n);
+        (yyval.t).r = mnlsp::RTE::get_var_fun_rte("_if", *(yyval.t).v);
+    }
+#line 1762 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
+  case 57:
+#line 341 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = (yyvsp[0].t).n;}
+#line 1768 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+    break;
+
   case 58:
-#line 241 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1666 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 344 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = (yyvsp[0].t).n;}
+#line 1774 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
   case 59:
-#line 244 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1672 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
-    break;
-
-  case 60:
-#line 247 "src/mnlsp.y" /* yacc.c:1652  */
-    {}
-#line 1678 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 347 "src/mnlsp.y" /* yacc.c:1652  */
+    {(yyval.t).n = (yyvsp[0].t).n;}
+#line 1780 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;
 
 
-#line 1682 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
+#line 1784 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1909,7 +2011,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 250 "src/mnlsp.y" /* yacc.c:1918  */
+#line 350 "src/mnlsp.y" /* yacc.c:1918  */
 
 void yyerror(const char* msg)
 {

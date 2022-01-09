@@ -1,0 +1,1943 @@
+文法
+
+    0 $accept: program $end
+
+    1 program: stmts
+
+    2 stmts: stmt stmts
+    3      | stmt
+
+    4 stmt: exp
+    5     | print_stmt
+    6     | def_stmt
+
+    7 exps: exp exps
+    8     | exp
+
+    9 exp: BOOL_VAL
+   10    | NUMBER
+   11    | variable
+   12    | num_op
+   13    | logical_op
+   14    | fun_exp
+   15    | fun_call
+   16    | if_exp
+
+   17 print_stmt: LP PRINT_NUM_ID exp RP
+   18           | LP PRINT_BOOL_ID exp RP
+
+   19 def_stmt: LP DEFINE_ID variable exp RP
+
+   20 variable: ID
+
+   21 num_op: plus
+   22       | minus
+   23       | multiply
+   24       | divide
+   25       | modulus
+   26       | greater
+   27       | smaller
+   28       | equal
+
+   29 plus: LP PLUS_ID exp exps RP
+
+   30 minus: LP MINUS_ID exp exp RP
+
+   31 multiply: LP MULTIPLY_ID exp exps RP
+
+   32 divide: LP DIVIDE_ID exp exp RP
+
+   33 modulus: LP MODULUS_ID exp exp RP
+
+   34 greater: LP GREATER_ID exp exp RP
+
+   35 smaller: LP SMALLER_ID exp exp RP
+
+   36 equal: LP EQUAL_ID exp exps RP
+
+   37 logical_op: and_op
+   38           | or_op
+   39           | not_op
+
+   40 and_op: LP AND_ID exp exps RP
+
+   41 or_op: LP OR_ID exp exps RP
+
+   42 not_op: LP NOT_ID exp RP
+
+   43 fun_exp: LP FUN_ID fun_ids fun_body RP
+
+   44 fun_ids: LP idsn RP
+
+   45 idsn: ID idsn
+   46     | %empty
+
+   47 fun_body: def_stmt exp
+   48         | exp
+
+   49 fun_call: LP fun_exp paramsn RP
+   50         | LP fun_name paramsn RP
+
+   51 paramsn: param paramsn
+   52        | %empty
+
+   53 param: exp
+
+   54 fun_name: ID
+
+   55 if_exp: LP IF_ID test_exp than_exp else_exp RP
+
+   56 test_exp: exp
+
+   57 than_exp: exp
+
+   58 else_exp: exp
+
+
+終結語詞，附有它們出現處的規則
+
+$end (0) 0
+error (256)
+NUMBER <t> (258) 10
+ID <t> (259) 20 45 54
+BOOL_VAL <t> (260) 9
+LP <t> (261) 17 18 19 29 30 31 32 33 34 35 36 40 41 42 43 44 49 50
+    55
+RP <t> (262) 17 18 19 29 30 31 32 33 34 35 36 40 41 42 43 44 49 50
+    55
+PRINT_NUM_ID <t> (263) 17
+PRINT_BOOL_ID <t> (264) 18
+PLUS_ID <t> (265) 29
+MINUS_ID <t> (266) 30
+MULTIPLY_ID <t> (267) 31
+DIVIDE_ID <t> (268) 32
+MODULUS_ID <t> (269) 33
+GREATER_ID <t> (270) 34
+SMALLER_ID <t> (271) 35
+EQUAL_ID <t> (272) 36
+AND_ID <t> (273) 40
+OR_ID <t> (274) 41
+NOT_ID <t> (275) 42
+DEFINE_ID <t> (276) 19
+FUN_ID <t> (277) 43
+IF_ID <t> (278) 55
+
+
+非終結語詞，附有它們出現處的規則
+
+$accept (24)
+    於左側： 0
+program <t> (25)
+    於左側： 1,於右側： 0
+stmts <t> (26)
+    於左側： 2 3,於右側： 1 2
+stmt <t> (27)
+    於左側： 4 5 6,於右側： 2 3
+exps <t> (28)
+    於左側： 7 8,於右側： 7 29 31 36 40 41
+exp <t> (29)
+    於左側： 9 10 11 12 13 14 15 16,於右側： 4 7 8 17 18 19
+    29 30 31 32 33 34 35 36 40 41 42 47 48 53 56 57 58
+print_stmt <t> (30)
+    於左側： 17 18,於右側： 5
+def_stmt <t> (31)
+    於左側： 19,於右側： 6 47
+variable <t> (32)
+    於左側： 20,於右側： 11 19
+num_op <t> (33)
+    於左側： 21 22 23 24 25 26 27 28,於右側： 12
+plus <t> (34)
+    於左側： 29,於右側： 21
+minus <t> (35)
+    於左側： 30,於右側： 22
+multiply <t> (36)
+    於左側： 31,於右側： 23
+divide <t> (37)
+    於左側： 32,於右側： 24
+modulus <t> (38)
+    於左側： 33,於右側： 25
+greater <t> (39)
+    於左側： 34,於右側： 26
+smaller <t> (40)
+    於左側： 35,於右側： 27
+equal <t> (41)
+    於左側： 36,於右側： 28
+logical_op <t> (42)
+    於左側： 37 38 39,於右側： 13
+and_op <t> (43)
+    於左側： 40,於右側： 37
+or_op <t> (44)
+    於左側： 41,於右側： 38
+not_op <t> (45)
+    於左側： 42,於右側： 39
+fun_exp <t> (46)
+    於左側： 43,於右側： 14 49
+fun_ids <t> (47)
+    於左側： 44,於右側： 43
+idsn <t> (48)
+    於左側： 45 46,於右側： 44 45
+fun_body <t> (49)
+    於左側： 47 48,於右側： 43
+fun_call <t> (50)
+    於左側： 49 50,於右側： 15
+paramsn <t> (51)
+    於左側： 51 52,於右側： 49 50 51
+param <t> (52)
+    於左側： 53,於右側： 51
+fun_name <t> (53)
+    於左側： 54,於右側： 50
+if_exp <t> (54)
+    於左側： 55,於右側： 16
+test_exp <t> (55)
+    於左側： 56,於右側： 55
+than_exp <t> (56)
+    於左側： 57,於右側： 55
+else_exp <t> (57)
+    於左側： 58,於右側： 55
+
+
+狀態 0
+
+    0 $accept: . program $end
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 4
+
+    program     進入狀態 5
+    stmts       進入狀態 6
+    stmt        進入狀態 7
+    exp         進入狀態 8
+    print_stmt  進入狀態 9
+    def_stmt    進入狀態 10
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 1
+
+   10 exp: NUMBER .
+
+    $預設  使用規則 10 以縮減 (exp)
+
+
+狀態 2
+
+   20 variable: ID .
+
+    $預設  使用規則 20 以縮減 (variable)
+
+
+狀態 3
+
+    9 exp: BOOL_VAL .
+
+    $預設  使用規則 9 以縮減 (exp)
+
+
+狀態 4
+
+   17 print_stmt: LP . PRINT_NUM_ID exp RP
+   18           | LP . PRINT_BOOL_ID exp RP
+   19 def_stmt: LP . DEFINE_ID variable exp RP
+   29 plus: LP . PLUS_ID exp exps RP
+   30 minus: LP . MINUS_ID exp exp RP
+   31 multiply: LP . MULTIPLY_ID exp exps RP
+   32 divide: LP . DIVIDE_ID exp exp RP
+   33 modulus: LP . MODULUS_ID exp exp RP
+   34 greater: LP . GREATER_ID exp exp RP
+   35 smaller: LP . SMALLER_ID exp exp RP
+   36 equal: LP . EQUAL_ID exp exps RP
+   40 and_op: LP . AND_ID exp exps RP
+   41 or_op: LP . OR_ID exp exps RP
+   42 not_op: LP . NOT_ID exp RP
+   43 fun_exp: LP . FUN_ID fun_ids fun_body RP
+   49 fun_call: LP . fun_exp paramsn RP
+   50         | LP . fun_name paramsn RP
+   55 if_exp: LP . IF_ID test_exp than_exp else_exp RP
+
+    ID             偏移，並進入狀態 28
+    LP             偏移，並進入狀態 29
+    PRINT_NUM_ID   偏移，並進入狀態 30
+    PRINT_BOOL_ID  偏移，並進入狀態 31
+    PLUS_ID        偏移，並進入狀態 32
+    MINUS_ID       偏移，並進入狀態 33
+    MULTIPLY_ID    偏移，並進入狀態 34
+    DIVIDE_ID      偏移，並進入狀態 35
+    MODULUS_ID     偏移，並進入狀態 36
+    GREATER_ID     偏移，並進入狀態 37
+    SMALLER_ID     偏移，並進入狀態 38
+    EQUAL_ID       偏移，並進入狀態 39
+    AND_ID         偏移，並進入狀態 40
+    OR_ID          偏移，並進入狀態 41
+    NOT_ID         偏移，並進入狀態 42
+    DEFINE_ID      偏移，並進入狀態 43
+    FUN_ID         偏移，並進入狀態 44
+    IF_ID          偏移，並進入狀態 45
+
+    fun_exp   進入狀態 46
+    fun_name  進入狀態 47
+
+
+狀態 5
+
+    0 $accept: program . $end
+
+    $end  偏移，並進入狀態 48
+
+
+狀態 6
+
+    1 program: stmts .
+
+    $預設  使用規則 1 以縮減 (program)
+
+
+狀態 7
+
+    2 stmts: stmt . stmts
+    3      | stmt .
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 4
+
+    $預設  使用規則 3 以縮減 (stmts)
+
+    stmts       進入狀態 49
+    stmt        進入狀態 7
+    exp         進入狀態 8
+    print_stmt  進入狀態 9
+    def_stmt    進入狀態 10
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 8
+
+    4 stmt: exp .
+
+    $預設  使用規則 4 以縮減 (stmt)
+
+
+狀態 9
+
+    5 stmt: print_stmt .
+
+    $預設  使用規則 5 以縮減 (stmt)
+
+
+狀態 10
+
+    6 stmt: def_stmt .
+
+    $預設  使用規則 6 以縮減 (stmt)
+
+
+狀態 11
+
+   11 exp: variable .
+
+    $預設  使用規則 11 以縮減 (exp)
+
+
+狀態 12
+
+   12 exp: num_op .
+
+    $預設  使用規則 12 以縮減 (exp)
+
+
+狀態 13
+
+   21 num_op: plus .
+
+    $預設  使用規則 21 以縮減 (num_op)
+
+
+狀態 14
+
+   22 num_op: minus .
+
+    $預設  使用規則 22 以縮減 (num_op)
+
+
+狀態 15
+
+   23 num_op: multiply .
+
+    $預設  使用規則 23 以縮減 (num_op)
+
+
+狀態 16
+
+   24 num_op: divide .
+
+    $預設  使用規則 24 以縮減 (num_op)
+
+
+狀態 17
+
+   25 num_op: modulus .
+
+    $預設  使用規則 25 以縮減 (num_op)
+
+
+狀態 18
+
+   26 num_op: greater .
+
+    $預設  使用規則 26 以縮減 (num_op)
+
+
+狀態 19
+
+   27 num_op: smaller .
+
+    $預設  使用規則 27 以縮減 (num_op)
+
+
+狀態 20
+
+   28 num_op: equal .
+
+    $預設  使用規則 28 以縮減 (num_op)
+
+
+狀態 21
+
+   13 exp: logical_op .
+
+    $預設  使用規則 13 以縮減 (exp)
+
+
+狀態 22
+
+   37 logical_op: and_op .
+
+    $預設  使用規則 37 以縮減 (logical_op)
+
+
+狀態 23
+
+   38 logical_op: or_op .
+
+    $預設  使用規則 38 以縮減 (logical_op)
+
+
+狀態 24
+
+   39 logical_op: not_op .
+
+    $預設  使用規則 39 以縮減 (logical_op)
+
+
+狀態 25
+
+   14 exp: fun_exp .
+
+    $預設  使用規則 14 以縮減 (exp)
+
+
+狀態 26
+
+   15 exp: fun_call .
+
+    $預設  使用規則 15 以縮減 (exp)
+
+
+狀態 27
+
+   16 exp: if_exp .
+
+    $預設  使用規則 16 以縮減 (exp)
+
+
+狀態 28
+
+   54 fun_name: ID .
+
+    $預設  使用規則 54 以縮減 (fun_name)
+
+
+狀態 29
+
+   43 fun_exp: LP . FUN_ID fun_ids fun_body RP
+
+    FUN_ID  偏移，並進入狀態 44
+
+
+狀態 30
+
+   17 print_stmt: LP PRINT_NUM_ID . exp RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 51
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 31
+
+   18 print_stmt: LP PRINT_BOOL_ID . exp RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 52
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 32
+
+   29 plus: LP PLUS_ID . exp exps RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 53
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 33
+
+   30 minus: LP MINUS_ID . exp exp RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 54
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 34
+
+   31 multiply: LP MULTIPLY_ID . exp exps RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 55
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 35
+
+   32 divide: LP DIVIDE_ID . exp exp RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 56
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 36
+
+   33 modulus: LP MODULUS_ID . exp exp RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 57
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 37
+
+   34 greater: LP GREATER_ID . exp exp RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 58
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 38
+
+   35 smaller: LP SMALLER_ID . exp exp RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 59
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 39
+
+   36 equal: LP EQUAL_ID . exp exps RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 60
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 40
+
+   40 and_op: LP AND_ID . exp exps RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 61
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 41
+
+   41 or_op: LP OR_ID . exp exps RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 62
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 42
+
+   42 not_op: LP NOT_ID . exp RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 63
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 43
+
+   19 def_stmt: LP DEFINE_ID . variable exp RP
+
+    ID  偏移，並進入狀態 2
+
+    variable  進入狀態 64
+
+
+狀態 44
+
+   43 fun_exp: LP FUN_ID . fun_ids fun_body RP
+
+    LP  偏移，並進入狀態 65
+
+    fun_ids  進入狀態 66
+
+
+狀態 45
+
+   55 if_exp: LP IF_ID . test_exp than_exp else_exp RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 67
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+    test_exp    進入狀態 68
+
+
+狀態 46
+
+   49 fun_call: LP fun_exp . paramsn RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    $預設  使用規則 52 以縮減 (paramsn)
+
+    exp         進入狀態 69
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    paramsn     進入狀態 70
+    param       進入狀態 71
+    if_exp      進入狀態 27
+
+
+狀態 47
+
+   50 fun_call: LP fun_name . paramsn RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    $預設  使用規則 52 以縮減 (paramsn)
+
+    exp         進入狀態 69
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    paramsn     進入狀態 72
+    param       進入狀態 71
+    if_exp      進入狀態 27
+
+
+狀態 48
+
+    0 $accept: program $end .
+
+    $預設  接受
+
+
+狀態 49
+
+    2 stmts: stmt stmts .
+
+    $預設  使用規則 2 以縮減 (stmts)
+
+
+狀態 50
+
+   29 plus: LP . PLUS_ID exp exps RP
+   30 minus: LP . MINUS_ID exp exp RP
+   31 multiply: LP . MULTIPLY_ID exp exps RP
+   32 divide: LP . DIVIDE_ID exp exp RP
+   33 modulus: LP . MODULUS_ID exp exp RP
+   34 greater: LP . GREATER_ID exp exp RP
+   35 smaller: LP . SMALLER_ID exp exp RP
+   36 equal: LP . EQUAL_ID exp exps RP
+   40 and_op: LP . AND_ID exp exps RP
+   41 or_op: LP . OR_ID exp exps RP
+   42 not_op: LP . NOT_ID exp RP
+   43 fun_exp: LP . FUN_ID fun_ids fun_body RP
+   49 fun_call: LP . fun_exp paramsn RP
+   50         | LP . fun_name paramsn RP
+   55 if_exp: LP . IF_ID test_exp than_exp else_exp RP
+
+    ID           偏移，並進入狀態 28
+    LP           偏移，並進入狀態 29
+    PLUS_ID      偏移，並進入狀態 32
+    MINUS_ID     偏移，並進入狀態 33
+    MULTIPLY_ID  偏移，並進入狀態 34
+    DIVIDE_ID    偏移，並進入狀態 35
+    MODULUS_ID   偏移，並進入狀態 36
+    GREATER_ID   偏移，並進入狀態 37
+    SMALLER_ID   偏移，並進入狀態 38
+    EQUAL_ID     偏移，並進入狀態 39
+    AND_ID       偏移，並進入狀態 40
+    OR_ID        偏移，並進入狀態 41
+    NOT_ID       偏移，並進入狀態 42
+    FUN_ID       偏移，並進入狀態 44
+    IF_ID        偏移，並進入狀態 45
+
+    fun_exp   進入狀態 46
+    fun_name  進入狀態 47
+
+
+狀態 51
+
+   17 print_stmt: LP PRINT_NUM_ID exp . RP
+
+    RP  偏移，並進入狀態 73
+
+
+狀態 52
+
+   18 print_stmt: LP PRINT_BOOL_ID exp . RP
+
+    RP  偏移，並進入狀態 74
+
+
+狀態 53
+
+   29 plus: LP PLUS_ID exp . exps RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exps        進入狀態 75
+    exp         進入狀態 76
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 54
+
+   30 minus: LP MINUS_ID exp . exp RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 77
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 55
+
+   31 multiply: LP MULTIPLY_ID exp . exps RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exps        進入狀態 78
+    exp         進入狀態 76
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 56
+
+   32 divide: LP DIVIDE_ID exp . exp RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 79
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 57
+
+   33 modulus: LP MODULUS_ID exp . exp RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 80
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 58
+
+   34 greater: LP GREATER_ID exp . exp RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 81
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 59
+
+   35 smaller: LP SMALLER_ID exp . exp RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 82
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 60
+
+   36 equal: LP EQUAL_ID exp . exps RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exps        進入狀態 83
+    exp         進入狀態 76
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 61
+
+   40 and_op: LP AND_ID exp . exps RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exps        進入狀態 84
+    exp         進入狀態 76
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 62
+
+   41 or_op: LP OR_ID exp . exps RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exps        進入狀態 85
+    exp         進入狀態 76
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 63
+
+   42 not_op: LP NOT_ID exp . RP
+
+    RP  偏移，並進入狀態 86
+
+
+狀態 64
+
+   19 def_stmt: LP DEFINE_ID variable . exp RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 87
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 65
+
+   44 fun_ids: LP . idsn RP
+
+    ID  偏移，並進入狀態 88
+
+    $預設  使用規則 46 以縮減 (idsn)
+
+    idsn  進入狀態 89
+
+
+狀態 66
+
+   43 fun_exp: LP FUN_ID fun_ids . fun_body RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 90
+
+    exp         進入狀態 91
+    def_stmt    進入狀態 92
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_body    進入狀態 93
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 67
+
+   56 test_exp: exp .
+
+    $預設  使用規則 56 以縮減 (test_exp)
+
+
+狀態 68
+
+   55 if_exp: LP IF_ID test_exp . than_exp else_exp RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 94
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+    than_exp    進入狀態 95
+
+
+狀態 69
+
+   53 param: exp .
+
+    $預設  使用規則 53 以縮減 (param)
+
+
+狀態 70
+
+   49 fun_call: LP fun_exp paramsn . RP
+
+    RP  偏移，並進入狀態 96
+
+
+狀態 71
+
+   51 paramsn: param . paramsn
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    $預設  使用規則 52 以縮減 (paramsn)
+
+    exp         進入狀態 69
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    paramsn     進入狀態 97
+    param       進入狀態 71
+    if_exp      進入狀態 27
+
+
+狀態 72
+
+   50 fun_call: LP fun_name paramsn . RP
+
+    RP  偏移，並進入狀態 98
+
+
+狀態 73
+
+   17 print_stmt: LP PRINT_NUM_ID exp RP .
+
+    $預設  使用規則 17 以縮減 (print_stmt)
+
+
+狀態 74
+
+   18 print_stmt: LP PRINT_BOOL_ID exp RP .
+
+    $預設  使用規則 18 以縮減 (print_stmt)
+
+
+狀態 75
+
+   29 plus: LP PLUS_ID exp exps . RP
+
+    RP  偏移，並進入狀態 99
+
+
+狀態 76
+
+    7 exps: exp . exps
+    8     | exp .
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    $預設  使用規則 8 以縮減 (exps)
+
+    exps        進入狀態 100
+    exp         進入狀態 76
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 77
+
+   30 minus: LP MINUS_ID exp exp . RP
+
+    RP  偏移，並進入狀態 101
+
+
+狀態 78
+
+   31 multiply: LP MULTIPLY_ID exp exps . RP
+
+    RP  偏移，並進入狀態 102
+
+
+狀態 79
+
+   32 divide: LP DIVIDE_ID exp exp . RP
+
+    RP  偏移，並進入狀態 103
+
+
+狀態 80
+
+   33 modulus: LP MODULUS_ID exp exp . RP
+
+    RP  偏移，並進入狀態 104
+
+
+狀態 81
+
+   34 greater: LP GREATER_ID exp exp . RP
+
+    RP  偏移，並進入狀態 105
+
+
+狀態 82
+
+   35 smaller: LP SMALLER_ID exp exp . RP
+
+    RP  偏移，並進入狀態 106
+
+
+狀態 83
+
+   36 equal: LP EQUAL_ID exp exps . RP
+
+    RP  偏移，並進入狀態 107
+
+
+狀態 84
+
+   40 and_op: LP AND_ID exp exps . RP
+
+    RP  偏移，並進入狀態 108
+
+
+狀態 85
+
+   41 or_op: LP OR_ID exp exps . RP
+
+    RP  偏移，並進入狀態 109
+
+
+狀態 86
+
+   42 not_op: LP NOT_ID exp RP .
+
+    $預設  使用規則 42 以縮減 (not_op)
+
+
+狀態 87
+
+   19 def_stmt: LP DEFINE_ID variable exp . RP
+
+    RP  偏移，並進入狀態 110
+
+
+狀態 88
+
+   45 idsn: ID . idsn
+
+    ID  偏移，並進入狀態 88
+
+    $預設  使用規則 46 以縮減 (idsn)
+
+    idsn  進入狀態 111
+
+
+狀態 89
+
+   44 fun_ids: LP idsn . RP
+
+    RP  偏移，並進入狀態 112
+
+
+狀態 90
+
+   19 def_stmt: LP . DEFINE_ID variable exp RP
+   29 plus: LP . PLUS_ID exp exps RP
+   30 minus: LP . MINUS_ID exp exp RP
+   31 multiply: LP . MULTIPLY_ID exp exps RP
+   32 divide: LP . DIVIDE_ID exp exp RP
+   33 modulus: LP . MODULUS_ID exp exp RP
+   34 greater: LP . GREATER_ID exp exp RP
+   35 smaller: LP . SMALLER_ID exp exp RP
+   36 equal: LP . EQUAL_ID exp exps RP
+   40 and_op: LP . AND_ID exp exps RP
+   41 or_op: LP . OR_ID exp exps RP
+   42 not_op: LP . NOT_ID exp RP
+   43 fun_exp: LP . FUN_ID fun_ids fun_body RP
+   49 fun_call: LP . fun_exp paramsn RP
+   50         | LP . fun_name paramsn RP
+   55 if_exp: LP . IF_ID test_exp than_exp else_exp RP
+
+    ID           偏移，並進入狀態 28
+    LP           偏移，並進入狀態 29
+    PLUS_ID      偏移，並進入狀態 32
+    MINUS_ID     偏移，並進入狀態 33
+    MULTIPLY_ID  偏移，並進入狀態 34
+    DIVIDE_ID    偏移，並進入狀態 35
+    MODULUS_ID   偏移，並進入狀態 36
+    GREATER_ID   偏移，並進入狀態 37
+    SMALLER_ID   偏移，並進入狀態 38
+    EQUAL_ID     偏移，並進入狀態 39
+    AND_ID       偏移，並進入狀態 40
+    OR_ID        偏移，並進入狀態 41
+    NOT_ID       偏移，並進入狀態 42
+    DEFINE_ID    偏移，並進入狀態 43
+    FUN_ID       偏移，並進入狀態 44
+    IF_ID        偏移，並進入狀態 45
+
+    fun_exp   進入狀態 46
+    fun_name  進入狀態 47
+
+
+狀態 91
+
+   48 fun_body: exp .
+
+    $預設  使用規則 48 以縮減 (fun_body)
+
+
+狀態 92
+
+   47 fun_body: def_stmt . exp
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 113
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+
+
+狀態 93
+
+   43 fun_exp: LP FUN_ID fun_ids fun_body . RP
+
+    RP  偏移，並進入狀態 114
+
+
+狀態 94
+
+   57 than_exp: exp .
+
+    $預設  使用規則 57 以縮減 (than_exp)
+
+
+狀態 95
+
+   55 if_exp: LP IF_ID test_exp than_exp . else_exp RP
+
+    NUMBER    偏移，並進入狀態 1
+    ID        偏移，並進入狀態 2
+    BOOL_VAL  偏移，並進入狀態 3
+    LP        偏移，並進入狀態 50
+
+    exp         進入狀態 115
+    variable    進入狀態 11
+    num_op      進入狀態 12
+    plus        進入狀態 13
+    minus       進入狀態 14
+    multiply    進入狀態 15
+    divide      進入狀態 16
+    modulus     進入狀態 17
+    greater     進入狀態 18
+    smaller     進入狀態 19
+    equal       進入狀態 20
+    logical_op  進入狀態 21
+    and_op      進入狀態 22
+    or_op       進入狀態 23
+    not_op      進入狀態 24
+    fun_exp     進入狀態 25
+    fun_call    進入狀態 26
+    if_exp      進入狀態 27
+    else_exp    進入狀態 116
+
+
+狀態 96
+
+   49 fun_call: LP fun_exp paramsn RP .
+
+    $預設  使用規則 49 以縮減 (fun_call)
+
+
+狀態 97
+
+   51 paramsn: param paramsn .
+
+    $預設  使用規則 51 以縮減 (paramsn)
+
+
+狀態 98
+
+   50 fun_call: LP fun_name paramsn RP .
+
+    $預設  使用規則 50 以縮減 (fun_call)
+
+
+狀態 99
+
+   29 plus: LP PLUS_ID exp exps RP .
+
+    $預設  使用規則 29 以縮減 (plus)
+
+
+狀態 100
+
+    7 exps: exp exps .
+
+    $預設  使用規則 7 以縮減 (exps)
+
+
+狀態 101
+
+   30 minus: LP MINUS_ID exp exp RP .
+
+    $預設  使用規則 30 以縮減 (minus)
+
+
+狀態 102
+
+   31 multiply: LP MULTIPLY_ID exp exps RP .
+
+    $預設  使用規則 31 以縮減 (multiply)
+
+
+狀態 103
+
+   32 divide: LP DIVIDE_ID exp exp RP .
+
+    $預設  使用規則 32 以縮減 (divide)
+
+
+狀態 104
+
+   33 modulus: LP MODULUS_ID exp exp RP .
+
+    $預設  使用規則 33 以縮減 (modulus)
+
+
+狀態 105
+
+   34 greater: LP GREATER_ID exp exp RP .
+
+    $預設  使用規則 34 以縮減 (greater)
+
+
+狀態 106
+
+   35 smaller: LP SMALLER_ID exp exp RP .
+
+    $預設  使用規則 35 以縮減 (smaller)
+
+
+狀態 107
+
+   36 equal: LP EQUAL_ID exp exps RP .
+
+    $預設  使用規則 36 以縮減 (equal)
+
+
+狀態 108
+
+   40 and_op: LP AND_ID exp exps RP .
+
+    $預設  使用規則 40 以縮減 (and_op)
+
+
+狀態 109
+
+   41 or_op: LP OR_ID exp exps RP .
+
+    $預設  使用規則 41 以縮減 (or_op)
+
+
+狀態 110
+
+   19 def_stmt: LP DEFINE_ID variable exp RP .
+
+    $預設  使用規則 19 以縮減 (def_stmt)
+
+
+狀態 111
+
+   45 idsn: ID idsn .
+
+    $預設  使用規則 45 以縮減 (idsn)
+
+
+狀態 112
+
+   44 fun_ids: LP idsn RP .
+
+    $預設  使用規則 44 以縮減 (fun_ids)
+
+
+狀態 113
+
+   47 fun_body: def_stmt exp .
+
+    $預設  使用規則 47 以縮減 (fun_body)
+
+
+狀態 114
+
+   43 fun_exp: LP FUN_ID fun_ids fun_body RP .
+
+    $預設  使用規則 43 以縮減 (fun_exp)
+
+
+狀態 115
+
+   58 else_exp: exp .
+
+    $預設  使用規則 58 以縮減 (else_exp)
+
+
+狀態 116
+
+   55 if_exp: LP IF_ID test_exp than_exp else_exp . RP
+
+    RP  偏移，並進入狀態 117
+
+
+狀態 117
+
+   55 if_exp: LP IF_ID test_exp than_exp else_exp RP .
+
+    $預設  使用規則 55 以縮減 (if_exp)

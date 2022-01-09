@@ -20,6 +20,15 @@ TARGET_ENV	:=
 # TARGET	:= hw$(INDEX)
 TARGET	:= mnlsp
 
+# Set the file structure
+BIN_DIR	:= ./bin
+SRC_DIR	:= ./src
+OBJ_DIR	:= ./build
+INC_DIR	:= ./inc
+LIB_DIR	:= ./lib
+CXX_DIR	:= ./build
+DOC_DIR	:= ./doc
+
 # Set the compiling settings
 # 	(Flex would generate C99 codes in default)
 CC		:= g++
@@ -30,19 +39,13 @@ endif
 
 # Set the Yacc settings
 YACC	:= bison
-Y_FLAGS	:= -d
+Y_FLAGS	:= -d --defines=$(INC_DIR)/$(TARGET).tab.h
+# 	Used if want to know the detailed conflicts
+Y_FLAGS	+= -v --report-file=$(DOC_DIR)/$(TARGET).output
 
 # Set the Lex settings
 LEX		:= flex
 L_FLAGS	:= 
-
-# Set the file structure
-BIN_DIR	:= ./bin
-SRC_DIR	:= ./src
-OBJ_DIR	:= ./build
-INC_DIR	:= ./inc
-LIB_DIR	:= ./lib
-CXX_DIR	:= ./build
 
 # Set the libraries
 LIBS	:= -lfl
@@ -83,8 +86,12 @@ cleaninc:
 cleancxx:
 	$(RM) $(CXX_DIR)/$(TARGET).tab.cpp $(CXX_DIR)/$(TARGET).yy.cpp
 
+# Clean all the generated Bison report files
+cleandoc:
+	$(RM) $(DOC_DIR)/$(TARGET).output
+
 # Clean all the generated files
-clean: cleanbin cleanobj cleaninc cleancxx
+clean: cleanbin cleanobj cleaninc cleancxx cleandoc
 
 # Compile all the specified files (if needed), and excute them
 run: all
@@ -92,7 +99,7 @@ run: all
 
 # Compile the Yacc file
 $(CXX_DIR)/$(TARGET).tab.cpp: $(SRC_DIR)/$(TARGET).y
-	$(YACC) $(Y_FLAGS) -o $@ $< --defines=$(INC_DIR)/$(TARGET).tab.h
+	$(YACC) $(Y_FLAGS) -o $@ $<
 
 # Compile the Lex file
 $(CXX_DIR)/$(TARGET).yy.cpp: $(SRC_DIR)/$(TARGET).l $(INC_DIR)/$(TARGET).tab.h $(INC_DIR)/$(TARGET).hpp
