@@ -76,7 +76,7 @@ cleanbin:
 
 # Clean all the object files
 cleanobj:
-	$(RM) $(OBJ_DIR)/$(TARGET).tab.o $(OBJ_DIR)/$(TARGET).yy.o
+	$(RM) $(OBJ_DIR)/$(TARGET).tab.o $(OBJ_DIR)/$(TARGET).yy.o $(OBJ_DIR)/$(TARGET).o
 
 # Clean all the generated C header files
 cleaninc:
