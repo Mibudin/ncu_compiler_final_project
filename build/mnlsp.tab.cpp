@@ -1319,7 +1319,7 @@ yyreduce:
         (yyval.t).r = mnlsp::RTE::get_base_rte();
         (yyval.t).r->add_params(*(yyvsp[0].t).v);
         brte = (yyval.t).r;
-        printf(">>>\n");
+        // printf(">>>\n");
     }
 #line 1325 "build/mnlsp.tab.cpp" /* yacc.c:1652  */
     break;

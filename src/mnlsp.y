@@ -99,7 +99,7 @@ program
         $$.r = mnlsp::RTE::get_base_rte();
         $$.r->add_params(*$1.v);
         brte = $$.r;
-        printf(">>>\n");
+        // printf(">>>\n");
     }
     ;
 stmts

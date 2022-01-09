@@ -222,7 +222,7 @@ namespace mnlsp
 
     void RTE::params_match(std::vector<Data> datas)
     {
-        printf("  >> pm\n");
+        // printf("  >> pm\n");
         if(ppool.size() != datas.size())
             throw (ErrPkt){ErrType::WRONG_PARAM_NUM,
                 ERRMSG_WRONG_PARAM_NUM(ppool.size(), datas.size())};
@@ -247,7 +247,7 @@ namespace mnlsp
             pid = ppool.end()[((pn + 1) % pnum) - 1];
             p = params.end()[((pn + 1) % pnum) - 1];
         }
-        printf(" pe %s\n", pid.c_str());
+        // printf(" pe %s\n", pid.c_str());
         Data data = eval_node(rtes, p);
         set_var(pid, data);
 
@@ -282,13 +282,13 @@ namespace mnlsp
 
     Data RTE::eval_var(RTES* rtes, const std::string id)
     {
-        printf(">> eval var %s\n", id.c_str());
+        // printf(">> eval var %s\n", id.c_str());
         return eval_data(rtes, rtes->get_var(id));
     }
 
     Data RTE::eval_node(RTES* rtes, ExpNode* node)
     {
-        printf("en %p\n", node);
+        // printf("en %p\n", node);
         if(node->ntype == NodeType::LIT)
              return eval_data(rtes, ((LitNode*)node)->data);
         else return eval_var(rtes, ((VarNode*)node)->vid);
@@ -453,7 +453,7 @@ namespace mnlsp::bif
 
     Data _print_num(RTES* rtes)
     {
-        printf("> pn\n");
+        // printf("> pn\n");
         // Number of params has been check in parsing
         Data d = rtes->get_rte(0)->params_eval(rtes)[0];
 
@@ -642,7 +642,7 @@ namespace mnlsp::bif
 
     Data _fun(RTES* rtes)
     {
-        printf(">> fun\n");
+        // printf(">> fun\n");
         RTE* crte = rtes->get_rte(0);
         // Format: _p_<name1>_<name2>
         std::vector<std::string> ids;
@@ -677,14 +677,14 @@ namespace mnlsp::bif
         // orte->set_ppool(rte->get_ppool());
         // orte->params_match(datas);
 
-        printf("<><>\n");
+        // printf("<><>\n");
 
         return Data(rte);
     }
 
     Data _fun_call(RTES* rtes)
     {
-        printf(">>> fun call\n");
+        // printf(">>> fun call\n");
         RTE* crte = rtes->get_rte(0);
         // printf(">>>1\n");
         std::vector<std::string> pids = crte->get_ppool();
@@ -697,7 +697,7 @@ namespace mnlsp::bif
                     ERRMSG_VAR_UNKNOWN(pids[i])};
             datas.push_back(d);
         }
-        printf(">>>2 %d\n");
+        // printf(">>>2 %d\n");
         RTE* frte;
         if(crte->get_params()[0]->ntype == NodeType::VAR)
         {
@@ -714,7 +714,7 @@ namespace mnlsp::bif
         // for(std::string s : crte->get_ppool()) printf(">%s<\n", s.c_str());
         for(std::string pid : frte->get_ppool()) crte->new_var(pid, Data());
         crte->params_match(datas);
-        printf("<<<\n");
+        // printf("<<<\n");
         // rte->ppool.insert(rte->ppool.end(), pids.begin(), pids.end());
 
         return frte->eval(rtes);
